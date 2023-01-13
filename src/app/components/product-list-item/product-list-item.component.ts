@@ -29,5 +29,6 @@ export class ProductListItemComponent implements OnInit {
 
   addToCart() {
     console.log(this.amount);
+    this.shopService.getCart().subscribe((cart) => console.log(cart));
   }
 }
