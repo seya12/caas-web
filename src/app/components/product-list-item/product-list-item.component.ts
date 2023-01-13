@@ -24,10 +24,4 @@ export class ProductListItemComponent implements OnInit {
       .getProduct(params["id"])
       .subscribe((res) => (this.product = res));
   }
-
-  imageUrl() {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      this.product.downloadLink!
-    );
-  }
 }

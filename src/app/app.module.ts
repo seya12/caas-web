@@ -18,6 +18,7 @@ import { ProductListItemComponent } from "./components/product-list-item/product
 import { HttpClientModule } from "@angular/common/http";
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatDividerModule } from "@angular/material/divider";
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
     MatInputModule,
     MatCardModule,
     MatGridListModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

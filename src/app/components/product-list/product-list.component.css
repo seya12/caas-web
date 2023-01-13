@@ -1,4 +1,10 @@
 .card{
-  max-width: 350px;
+  width: 350px;
+  height: 400px;
   cursor: pointer;
+}
+
+.product-image{
+  max-width: 350px;
+  max-height: 250px;
 }

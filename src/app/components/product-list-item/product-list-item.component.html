@@ -1,5 +1,18 @@
-<p>{{ product.id }}</p>
-<p>{{ product.name }}</p>
-<p>{{ product.description }}</p>
-<img [src]="product.downloadLink" />
-<p>{{ product.price }}</p>
+<mat-grid-list cols="3" rowHeight="1:2" gutterSize="20px">
+  <mat-grid-tile>
+    <div class="custom-tile">
+      <img [src]="product.downloadLink" />
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="product-info">
+      <h1 class="mat-headline-2">{{ product.name }}</h1>
+      <h2 class="mat-headline-4">{{ product.price }}€</h2>
+      <p>{{ product.description }}</p>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="custom-tile">Add to Warenkorb</div>
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-divider></mat-divider>
