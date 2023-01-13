@@ -7,4 +7,5 @@
 .product-image{
   max-width: 350px;
   max-height: 250px;
+  object-fit: cover;
 }

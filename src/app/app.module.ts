@@ -19,6 +19,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatSelectModule } from "@angular/material/select";
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { MatDividerModule } from "@angular/material/divider";
     MatCardModule,
     MatGridListModule,
     MatDividerModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

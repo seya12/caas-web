@@ -12,7 +12,22 @@
     </div>
   </mat-grid-tile>
   <mat-grid-tile>
-    <div class="custom-tile">Add to Warenkorb</div>
+    <mat-form-field appearance="fill">
+      <mat-label>Menge</mat-label>
+      <mat-select [(value)]="amount">
+        <mat-option *ngFor="let num of amountOptions" [value]="num">
+          {{ num }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="addToCart()"
+      [disabled]="amount === 0"
+    >
+      In den Einkaufswagen
+    </button>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-divider></mat-divider>
