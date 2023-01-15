@@ -14,8 +14,8 @@
   <mat-grid-tile>
     <mat-form-field appearance="fill">
       <mat-label>Menge</mat-label>
-      <mat-select [(value)]="amount">
-        <mat-option *ngFor="let num of amountOptions" [value]="num">
+      <mat-select [(value)]="quantity">
+        <mat-option *ngFor="let num of quantityOptions" [value]="num">
           {{ num }}
         </mat-option>
       </mat-select>
@@ -24,7 +24,7 @@
       mat-raised-button
       color="accent"
       (click)="addToCart()"
-      [disabled]="amount === 0"
+      [disabled]="quantity === 0"
     >
       In den Einkaufswagen
     </button>

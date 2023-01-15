@@ -29,19 +29,18 @@ export class ShopService {
     );
   }
 
+  public getCartIdFromLocalStorage(): string | null {
+    return localStorage.getItem("cartId");
+  }
+
   public getCart(): Observable<Cart> {
-    const cartId = localStorage.getItem("cartId");
-    console.log(cartId);
+    const cartId = this.getCartIdFromLocalStorage();
     if (!cartId) {
-      const observable = this.createCart().pipe(
+      return this.createCart().pipe(
         tap((cart) => {
           localStorage.setItem("cartId", JSON.stringify(cart.id));
-          console.log(`created cart:${cart.id} `);
         })
       );
-      // observable.subscribe((cart) => {});
-
-      return observable;
     }
 
     return this.httpClient.get<Cart>(
@@ -53,6 +52,17 @@ export class ShopService {
     return this.httpClient.post<Cart>(
       `${environment.server}/shops/1/carts`,
       null
+    );
+  }
+
+  public addToCart(productId: number, quantity: number): void {
+    this.getCart().subscribe((cart) =>
+      this.httpClient
+        .post<Cart>(`${environment.server}/shops/1/carts/${cart.id}/products`, {
+          productId,
+          quantity,
+        })
+        .subscribe(() => "yo")
     );
   }
 }

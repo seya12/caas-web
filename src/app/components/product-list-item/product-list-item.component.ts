@@ -10,14 +10,14 @@ import { ShopService } from "src/app/shared/shop.service";
 })
 export class ProductListItemComponent implements OnInit {
   product: Product = new Product();
-  amountOptions: number[];
-  amount = 0;
+  quantityOptions: number[];
+  quantity = 0;
   constructor(
     private shopService: ShopService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.amountOptions = [...Array(10).keys()].map((i) => i + 1);
+    this.quantityOptions = [...Array(10).keys()].map((i) => i + 1);
   }
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class ProductListItemComponent implements OnInit {
   }
 
   addToCart() {
-    console.log(this.amount);
-    this.shopService.getCart().subscribe((cart) => console.log(cart));
+    // this.shopService.getCart().subscribe((cart) => console.log(cart));
+    this.shopService.addToCart(this.product.id as number, this.quantity);
   }
 }
