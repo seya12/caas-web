@@ -11,8 +11,12 @@ h1{
   font-size: 24px;
   font-weight: 400;
 }
-
+/*
 .custom-tile{
   height: 100%;
   width: 100%;
+} */
+
+.custom-image{
+  object-fit: cover;
 }

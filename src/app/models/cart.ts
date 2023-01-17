@@ -1,9 +1,9 @@
-import { Product } from "./product";
+import { CartProduct } from "./cartProduct";
 
 export class Cart {
   constructor(
-    public id?: string,
+    public id?: number,
     public cartDiscount?: number,
-    public products?: Product[]
+    public products?: CartProduct[]
   ) {}
 }

@@ -26,3 +26,7 @@
 .icon {
   padding: 0 14px;
 }
+
+.home {
+  cursor: pointer;
+}

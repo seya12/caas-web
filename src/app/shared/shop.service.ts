@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { firstValueFrom, Observable, of, tap } from "rxjs";
+import { concatMap, Observable, of, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Cart } from "../models/cart";
 import { Product } from "../models/product";
@@ -62,7 +62,31 @@ export class ShopService {
           productId,
           quantity,
         })
-        .subscribe(() => "yo")
+        .subscribe()
     );
+  }
+
+  public updateCart(
+    cartId: number,
+    productId: number,
+    quantity: number
+  ): Observable<Cart> {
+    return this.httpClient
+      .put(
+        `${environment.server}/shops/1/carts/${cartId}/products/${productId}`,
+        { quantity }
+      )
+      .pipe(concatMap(() => this.getCart()));
+  }
+
+  public deleteProductFromCart(
+    cartId: number,
+    productId: number
+  ): Observable<Cart> {
+    return this.httpClient
+      .delete(
+        `${environment.server}/shops/1/carts/${cartId}/products/${productId}`
+      )
+      .pipe(concatMap(() => this.getCart()));
   }
 }
