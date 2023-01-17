@@ -13,6 +13,8 @@ export class CartComponent implements OnInit {
   cart: Cart = new Cart();
   quantityOptions: number[];
   quantity = 0;
+  count = 0;
+  sum = 0;
 
   constructor(private shopService: ShopService) {
     this.quantityOptions = [...Array(10).keys()].map((i) => i + 1);

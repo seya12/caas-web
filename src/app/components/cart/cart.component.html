@@ -1,26 +1,36 @@
 <h1>Einkaufswagen</h1>
-<mat-card *ngFor="let product of cart.products" class="card">
-  <mat-card-header>
-    <mat-card-title>{{ product.name }}</mat-card-title>
-    <mat-card-title>{{ product.price }}€</mat-card-title>
-  </mat-card-header>
-  <mat-card-actions align="end">
-    <div class="product-info">
-      <mat-form-field appearance="fill">
-        <mat-label>Menge</mat-label>
-        <mat-select
-          [value]="product.quantity"
-          (selectionChange)="update($event, product.productId)"
-        >
-          <mat-option *ngFor="let num of quantityOptions" [value]="num">
-            {{ num }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+<div class="row">
+  <div class="column-1">
+    <mat-card *ngFor="let product of cart.products">
+      <mat-card-header>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-title>{{ product.price }}€</mat-card-title>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <div class="product-info">
+          <mat-form-field appearance="fill">
+            <mat-label>Menge</mat-label>
+            <mat-select
+              [value]="product.quantity"
+              (selectionChange)="update($event, product.productId)"
+            >
+              <mat-option *ngFor="let num of quantityOptions" [value]="num">
+                {{ num }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <button mat-button (click)="deleteProduct(product.productId)">
-      Löschen
+        <button mat-button (click)="deleteProduct(product.productId)">
+          Löschen
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="column-2">
+    <p>Summe {{ count }} Artikel: {{ sum }} €</p>
+    <button mat-raised-button color="accent" routerLink="/order">
+      Zur Kasse gehen
     </button>
-  </mat-card-actions>
-</mat-card>
+  </div>
+</div>

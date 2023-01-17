@@ -1,0 +1,11 @@
+.row {
+  display: flex;
+}
+
+.column-1{
+  flex: 80%;
+}
+
+.column-2{
+  flex: 20%;
+}

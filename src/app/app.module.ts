@@ -20,7 +20,8 @@ import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatSelectModule } from "@angular/material/select";
-import { CartComponent } from './components/cart/cart.component';
+import { CartComponent } from "./components/cart/cart.component";
+import { OrderComponent } from "./components/order/order.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { CartComponent } from './components/cart/cart.component';
     ProductListComponent,
     ProductListItemComponent,
     CartComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

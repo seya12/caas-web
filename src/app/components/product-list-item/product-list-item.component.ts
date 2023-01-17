@@ -28,7 +28,7 @@ export class ProductListItemComponent implements OnInit {
   }
 
   addToCart() {
-    // this.shopService.getCart().subscribe((cart) => console.log(cart));
     this.shopService.addToCart(this.product.id as number, this.quantity);
+    //TODO: Feedback
   }
 }
