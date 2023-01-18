@@ -1,0 +1,17 @@
+.row {
+  display: flex;
+}
+
+.column-1{
+  flex: 80%;
+}
+
+.column-2{
+  flex: 20%;
+}
+
+.input-form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

@@ -15,6 +15,7 @@ export class CartComponent implements OnInit {
   quantity = 0;
   count = 0;
   sum = "0";
+  //TODO: visualize currencies better
 
   constructor(private shopService: ShopService) {
     this.quantityOptions = [...Array(10).keys()].map((i) => i + 1);

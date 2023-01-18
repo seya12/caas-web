@@ -1,2 +1,119 @@
-<h1>Deine Bestellung</h1>
-<div></div>
+<div class="header">
+  <a routerLink="/home/cart">click me</a>
+  <h1>Deine Bestellung</h1>
+</div>
+<div class="row">
+  <div class="column-1">
+    <h2 (click)="newUser = false">Benutzer-Daten</h2>
+    <div *ngIf="user.cartId !== 0">
+      <p>Name: {{ user.firstName }} {{ user.lastName }}</p>
+      <p>Email: {{ user.email }}</p>
+    </div>
+    <button mat-button (click)="onChangePayment()">Ändern</button>
+    <div *ngIf="changeUser">
+      <input #email />
+      <button (click)="searchForUser(email.value)">Nach Benutzer suchen</button>
+      <div *ngIf="found">
+        <p>Vorname: {{ user.firstName }}</p>
+        <p>Nachname: {{ user.lastName }}</p>
+        <p>Email: {{ user.email }}</p>
+        <button (click)="setUser()">Benutzer verwenden</button>
+      </div>
+      <button style="display: block" (click)="newUser = true">
+        Neuen hinzufügen
+      </button>
+      <div *ngIf="newUser">
+        <form
+          [formGroup]="newUserForm"
+          class="input-form"
+          (submit)="createUser($event)"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>Vorname</mat-label>
+            <input formControlName="firstName" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Nachname</mat-label>
+            <input formControlName="lastName" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput />
+            <mat-error *ngIf="newUserForm.controls['email'].invalid"
+              >Ungültige Email-Adresse!</mat-error
+            >
+          </mat-form-field>
+          <button
+            mat-raised-button
+            type="submit"
+            [disabled]="!newUserForm.valid"
+          >
+            Absenden
+          </button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <h2>Zahlungsart</h2>
+      <div *ngIf="payment.id !== 0">
+        <p>Kreditkarte mit Nummer {{ payment.cardNumber }}</p>
+      </div>
+      <button mat-button (click)="showPayment = !showPayment">
+        {{ payment.id !== 0 ? "Ändern" : "Erstellen" }}
+      </button>
+      <div *ngIf="showPayment">
+        <form
+          [formGroup]="paymentForm"
+          class="input-form"
+          (submit)="paymentAction($event)"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>Kartennummer</mat-label>
+            <input formControlName="cardNumber" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Verifizierungscode</mat-label>
+            <input formControlName="verificationCode" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Ablaufdatum</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="expiryDate"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            type="submit"
+            [disabled]="!paymentForm.valid"
+          >
+            Absenden
+          </button>
+        </form>
+      </div>
+    </div>
+    <h2>Artikel überprüfen</h2>
+    <mat-card *ngFor="let product of cart.products">
+      <mat-card-header>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-title
+          >{{ product.price - product.discount }}€
+        </mat-card-title>
+        <mat-card-title>Menge: {{ product.quantity }}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+  </div>
+  <div class="column-2">
+    <p>Summe {{ sum }} €</p>
+    <button mat-raised-button color="accent" routerLink="/order">
+      Bestellen
+    </button>
+  </div>
+</div>

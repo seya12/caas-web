@@ -10,6 +10,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
+import { ReactiveFormsModule } from "@angular/forms";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { MatInputModule } from "@angular/material/input";
 import { HomeComponent } from "./pages/home/home.component";
@@ -21,7 +22,9 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatSelectModule } from "@angular/material/select";
 import { CartComponent } from "./components/cart/cart.component";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 import { OrderComponent } from "./components/order/order.component";
+import { MatNativeDateModule } from "@angular/material/core";
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +51,9 @@ import { OrderComponent } from "./components/order/order.component";
     MatGridListModule,
     MatDividerModule,
     MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core";
 import { concatMap, Observable, of, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Cart } from "../models/cart";
+import { Payment } from "../models/payment";
 import { Product } from "../models/product";
+import { User } from "../models/user";
 @Injectable({
   providedIn: "root",
 })
@@ -88,5 +90,68 @@ export class ShopService {
         `${environment.server}/shops/1/carts/${cartId}/products/${productId}`
       )
       .pipe(concatMap(() => this.getCart()));
+  }
+
+  public getUser(id: number) {
+    return this.httpClient.get<User>(
+      `${environment.server}/shops/1/users/${id}`
+    );
+  }
+
+  public searchForUser(email: string) {
+    return this.httpClient.get<User>(
+      `${environment.server}/shops/1/users?email=${email}`
+    );
+  }
+
+  public setUserForCart(userId: number) {
+    this.getCart()
+      .pipe(
+        concatMap((cart) =>
+          this.httpClient.put(
+            `${environment.server}/shops/1/carts/${cart.id}`,
+            {
+              userId,
+            }
+          )
+        )
+      )
+      .subscribe();
+  }
+
+  public createUser(user: User) {
+    console.log(user);
+    this.getCart()
+      .pipe(
+        concatMap((cart) =>
+          this.httpClient.post<User>(`${environment.server}/shops/1/users`, {
+            ...user,
+            cartId: cart.id,
+          })
+        )
+      )
+      .subscribe();
+  }
+
+  public getPayment(userId: number): Observable<Payment> {
+    return this.httpClient.get<Payment>(
+      `${environment.server}/shops/1/users/${userId}/payments`
+    );
+  }
+  public addPayment(userId: number, payment: Payment): Observable<Payment> {
+    return this.httpClient.post<Payment>(
+      `${environment.server}/shops/1/users/${userId}/payments`,
+      payment
+    );
+  }
+
+  public updatePayment(userId: number, payment: Payment): Observable<Payment> {
+    console.log("update", payment);
+    return this.httpClient
+      .put(
+        `${environment.server}/shops/1/users/${userId}/payments/${payment.id}`,
+        payment
+      )
+      .pipe(concatMap(() => this.getPayment(userId)));
   }
 }
