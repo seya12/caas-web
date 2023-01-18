@@ -1,9 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { Cart } from "src/app/models/cart";
+import { CheckoutResponse } from "src/app/models/checkoutResponse";
+import { Coupon } from "src/app/models/coupon";
 import { Payment } from "src/app/models/payment";
 import { User } from "src/app/models/user";
 import { ShopService } from "src/app/shared/shop.service";
+import { OrderDialogComponent } from "../order-dialog/order-dialog.component";
 
 @Component({
   selector: "app-order",
@@ -14,7 +18,8 @@ export class OrderComponent implements OnInit {
   cart = new Cart();
   payment = new Payment();
   user = new User();
-  sum = "0";
+  coupon = new Coupon();
+  sum = 0;
   found = false;
   newUser = false;
   changeUser = false;
@@ -24,7 +29,8 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private shopService: ShopService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -51,15 +57,11 @@ export class OrderComponent implements OnInit {
   }
 
   assignMembers(cart: Cart): void {
-    let sum = 0;
     this.cart = cart;
 
-    cart.products?.forEach((p) => (sum += (p.price - p.discount) * p.quantity));
-
-    this.sum = new Intl.NumberFormat("de-DE", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(sum);
+    cart.products?.forEach(
+      (p) => (this.sum += (p.price - p.discount) * p.quantity)
+    );
 
     if (cart.id !== 0) {
       this.shopService.getUser(cart.userId).subscribe((user) => {
@@ -126,5 +128,36 @@ export class OrderComponent implements OnInit {
     }
     console.log(new Date().toISOString());
     console.log(new Date(this.payment.expiryDate));
+  }
+
+  redeemCoupon(input: string): void {
+    this.shopService.redeemCoupon(this.cart.id, input).subscribe((coupon) => {
+      console.log(coupon);
+      this.coupon = coupon;
+    });
+  }
+
+  deleteCoupon(): void {
+    this.shopService
+      .deleteCoupon(this.cart.id, this.coupon.code)
+      .subscribe(() => (this.coupon = new Coupon()));
+  }
+
+  makeOrder(): void {
+    this.shopService.makeOrder(this.cart.id).subscribe({
+      next: (resp) => this.openOrder(resp),
+      error: (resp) => this.showError(resp),
+    });
+  }
+
+  openOrder(response: CheckoutResponse) {
+    const dialogRef = this.dialog.open(OrderDialogComponent, {
+      data: { response },
+    });
+  }
+  showError(response: CheckoutResponse) {
+    const dialogRef = this.dialog.open(OrderDialogComponent, {
+      data: { response },
+    });
   }
 }

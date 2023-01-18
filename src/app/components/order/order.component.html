@@ -98,21 +98,37 @@
           </button>
         </form>
       </div>
+      <div>
+        <input #couponInput />
+        <button
+          [disabled]="coupon.value !== 0"
+          (click)="redeemCoupon(couponInput.value)"
+        >
+          Coupon Einlösen
+        </button>
+        <button [disabled]="coupon.value === 0" (click)="deleteCoupon()">
+          Coupon Entfernen
+        </button>
+      </div>
     </div>
     <h2>Artikel überprüfen</h2>
     <mat-card *ngFor="let product of cart.products">
       <mat-card-header>
         <mat-card-title>{{ product.name }}</mat-card-title>
         <mat-card-title
-          >{{ product.price - product.discount }}€
+          >{{ product.price - product.discount | currency : "EUR" }}
         </mat-card-title>
         <mat-card-title>Menge: {{ product.quantity }}</mat-card-title>
       </mat-card-header>
     </mat-card>
   </div>
   <div class="column-2">
-    <p>Summe {{ sum }} €</p>
-    <button mat-raised-button color="accent" routerLink="/order">
+    <div *ngIf="coupon.value !== 0">
+      <p>Summe: {{ sum | currency : "EUR" }}</p>
+      <p>Gutschein eingelöst: - {{ coupon.value | currency : "EUR" }}</p>
+    </div>
+    <p>Gesamtbetrag: {{ sum - coupon.value | currency : "EUR" }}</p>
+    <button mat-raised-button color="accent" (click)="makeOrder()">
       Bestellen
     </button>
   </div>

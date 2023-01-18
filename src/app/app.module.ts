@@ -25,6 +25,8 @@ import { CartComponent } from "./components/cart/cart.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { OrderComponent } from "./components/order/order.component";
 import { MatNativeDateModule } from "@angular/material/core";
+import { OrderDialogComponent } from "./components/order-dialog/order-dialog.component";
+import { MatDialogModule } from "@angular/material/dialog";
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +36,7 @@ import { MatNativeDateModule } from "@angular/material/core";
     ProductListItemComponent,
     CartComponent,
     OrderComponent,
+    OrderDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { MatNativeDateModule } from "@angular/material/core";
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { concatMap, Observable, of, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Cart } from "../models/cart";
+import { CheckoutResponse } from "../models/checkoutResponse";
+import { Coupon } from "../models/coupon";
 import { Payment } from "../models/payment";
 import { Product } from "../models/product";
 import { User } from "../models/user";
@@ -146,12 +148,31 @@ export class ShopService {
   }
 
   public updatePayment(userId: number, payment: Payment): Observable<Payment> {
-    console.log("update", payment);
     return this.httpClient
       .put(
         `${environment.server}/shops/1/users/${userId}/payments/${payment.id}`,
         payment
       )
       .pipe(concatMap(() => this.getPayment(userId)));
+  }
+
+  public redeemCoupon(cartId: number, code: string): Observable<Coupon> {
+    return this.httpClient.post<Coupon>(
+      `${environment.server}/shops/1/coupons/redeem`,
+      { cartId, code }
+    );
+  }
+
+  public deleteCoupon(cartId: number, code: string): Observable<unknown> {
+    return this.httpClient.delete(`${environment.server}/shops/1/coupons`, {
+      body: { cartId, code },
+    });
+  }
+
+  public makeOrder(cartId: number): Observable<CheckoutResponse> {
+    return this.httpClient.post<CheckoutResponse>(
+      `${environment.server}/shops/1/carts/${cartId}/order`,
+      {}
+    );
   }
 }
