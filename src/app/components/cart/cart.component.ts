@@ -14,37 +14,41 @@ export class CartComponent implements OnInit {
   quantityOptions: number[];
   quantity = 0;
   count = 0;
-  sum = 0;
+  sum = "0";
 
   constructor(private shopService: ShopService) {
     this.quantityOptions = [...Array(10).keys()].map((i) => i + 1);
   }
 
   ngOnInit(): void {
-    this.shopService.getCart().subscribe((cart) => {
-      this.cart = cart;
-      console.log(cart);
+    this.shopService.getCart().subscribe((cart) => this.assignMembers(cart));
+  }
+
+  assignMembers(cart: Cart): void {
+    let sum = 0;
+    this.count = 0;
+    this.cart = cart;
+
+    cart.products?.forEach((p) => {
+      sum += (p.price - p.discount) * p.quantity;
+      this.count += p.quantity;
     });
+
+    this.sum = new Intl.NumberFormat("de-DE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(sum);
   }
 
-  updateQuantity(productId?: number): void {
-    console.log(this.cart);
-    console.log(`update: ${this.quantity} + ${productId}`);
+  deleteProduct(productId: number): void {
     this.shopService
-      .updateCart(this.cart.id as number, productId as number, this.quantity)
-      .subscribe((cart) => (this.cart = cart));
+      .deleteProductFromCart(this.cart.id, productId)
+      .subscribe((cart) => this.assignMembers(cart));
   }
 
-  deleteProduct(productId?: number): void {
-    console.log(`delete: ${this.quantity} + ${productId}`);
+  update(event: MatSelectChange, productId: number): void {
     this.shopService
-      .deleteProductFromCart(this.cart.id as number, productId as number)
-      .subscribe((cart) => (this.cart = cart));
-  }
-
-  update(event: MatSelectChange, productId?: number): void {
-    this.shopService
-      .updateCart(this.cart.id as number, productId as number, event.value)
-      .subscribe((cart) => (this.cart = cart));
+      .updateCart(this.cart.id, productId, event.value)
+      .subscribe((cart) => this.assignMembers(cart));
   }
 }

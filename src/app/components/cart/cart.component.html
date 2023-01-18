@@ -4,7 +4,14 @@
     <mat-card *ngFor="let product of cart.products">
       <mat-card-header>
         <mat-card-title>{{ product.name }}</mat-card-title>
-        <mat-card-title>{{ product.price }}€</mat-card-title>
+        <mat-card-title
+          >{{ product.price - product.discount }}€
+          <span
+            style="text-decoration: line-through"
+            *ngIf="product.discount !== 0"
+            >{{ product.price }}</span
+          ></mat-card-title
+        >
       </mat-card-header>
       <mat-card-actions align="end">
         <div class="product-info">
