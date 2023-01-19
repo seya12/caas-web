@@ -31,10 +31,14 @@ import { OrderDialogSuccessComponent } from "./components/order-dialog-success/o
 import { LoginComponent } from "./pages/login/login.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { AdminNavigationComponent } from "./components/admin-navigation/admin-navigation.component";
-import { ShopComponent } from './components/admin/shop/shop.component';
-import { AdminProductListComponent } from './components/admin/admin-product-list/admin-product-list.component';
-import { StatisticsComponent } from './components/admin/statistics/statistics.component';
-import { DiscountsComponent } from './components/admin/discounts/discounts.component';
+import { ShopComponent } from "./components/admin/shop/shop.component";
+import { AdminProductListComponent } from "./components/admin/admin-product-list/admin-product-list.component";
+import { StatisticsComponent } from "./components/admin/statistics/statistics.component";
+import { DiscountsComponent } from "./components/admin/discounts/discounts.component";
+import { TestComponent } from "./components/admin/test/test.component";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { ShopDialogComponent } from './components/admin/shop-dialog/shop-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +57,8 @@ import { DiscountsComponent } from './components/admin/discounts/discounts.compo
     AdminProductListComponent,
     StatisticsComponent,
     DiscountsComponent,
+    TestComponent,
+    ShopDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +80,8 @@ import { DiscountsComponent } from './components/admin/discounts/discounts.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatRadioModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

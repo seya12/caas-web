@@ -1,3 +1,4 @@
+import { TestComponent } from "./components/admin/test/test.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";

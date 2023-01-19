@@ -33,7 +33,7 @@ export class OrderComponent implements OnInit {
   constructor(
     private shopService: ShopService,
     private formBuilder: FormBuilder,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {}
 

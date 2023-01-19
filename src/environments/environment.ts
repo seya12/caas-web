@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   server: "http://localhost:8001",
+  shop: "/shops/1",
+  AppKey: "833d7783-3e13-4007-bd86-852ef08843f7",
 };
 
 /*

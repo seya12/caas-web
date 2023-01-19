@@ -12,8 +12,6 @@ import { User } from "../models/user";
   providedIn: "root",
 })
 export class ShopService {
-  productItems: Product[] = [];
-
   constructor(private httpClient: HttpClient) {}
 
   private errorHandler(error: Error | any): Observable<any> {

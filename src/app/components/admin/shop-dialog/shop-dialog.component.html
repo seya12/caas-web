@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Hinzufügen Erfolgreich</h1>
+<div mat-dialog-content>
+  <h2>Neuer Shop</h2>
+  <p><strong>Id:</strong> {{ data.id }}</p>
+  <p><strong>Name:</strong> {{ data.name }}</p>
+  <p><strong>AppKey:</strong> {{ data.appKey }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
