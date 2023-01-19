@@ -23,12 +23,14 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatSelectModule } from "@angular/material/select";
 import { CartComponent } from "./components/cart/cart.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { OrderComponent } from "./components/order/order.component";
+import { OrderComponent } from "./pages/order/order.component";
 import { MatNativeDateModule } from "@angular/material/core";
-import { OrderDialogComponent } from "./components/order-dialog/order-dialog.component";
 import { MatDialogModule } from "@angular/material/dialog";
-import { OrderDialogFailedComponent } from './components/order-dialog-failed/order-dialog-failed.component';
-import { OrderDialogSuccessComponent } from './components/order-dialog-success/order-dialog-success.component';
+import { OrderDialogFailedComponent } from "./components/order-dialog-failed/order-dialog-failed.component";
+import { OrderDialogSuccessComponent } from "./components/order-dialog-success/order-dialog-success.component";
+import { LoginComponent } from "./pages/login/login.component";
+import { AdminComponent } from "./pages/admin/admin.component";
+import { AdminNavigationComponent } from "./components/admin-navigation/admin-navigation.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,9 +40,11 @@ import { OrderDialogSuccessComponent } from './components/order-dialog-success/o
     ProductListItemComponent,
     CartComponent,
     OrderComponent,
-    OrderDialogComponent,
     OrderDialogFailedComponent,
     OrderDialogSuccessComponent,
+    LoginComponent,
+    AdminNavigationComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

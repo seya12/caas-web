@@ -5,7 +5,7 @@
     fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
+    [opened]="(isHandset$ | async) === false && adminLogin"
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
@@ -21,7 +21,7 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
+        *ngIf="(isHandset$ | async) === false && adminLogin"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
@@ -32,9 +32,9 @@
         <mat-label>Produktsuche</mat-label>
         <input matInput />
       </mat-form-field>
-      <mat-icon class="icon">login</mat-icon>
+      <mat-icon class="icon" routerLink="/login">login</mat-icon>
       <mat-icon class="icon" routerLink="cart">shopping_cart</mat-icon>
     </mat-toolbar>
-    <ng-content></ng-content>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

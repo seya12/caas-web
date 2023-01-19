@@ -1,4 +1,4 @@
-import { OrderDialogSuccessComponent } from "./../order-dialog-success/order-dialog-success.component";
+import { OrderDialogSuccessComponent } from "../../components/order-dialog-success/order-dialog-success.component";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
@@ -8,8 +8,7 @@ import { Coupon } from "src/app/models/coupon";
 import { Payment } from "src/app/models/payment";
 import { User } from "src/app/models/user";
 import { ShopService } from "src/app/shared/shop.service";
-import { OrderDialogComponent } from "../order-dialog/order-dialog.component";
-import { OrderDialogFailedComponent } from "../order-dialog-failed/order-dialog-failed.component";
+import { OrderDialogFailedComponent } from "../../components/order-dialog-failed/order-dialog-failed.component";
 import { Router } from "@angular/router";
 
 @Component({

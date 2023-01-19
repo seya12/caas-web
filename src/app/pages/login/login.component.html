@@ -1,0 +1,12 @@
+<h1>Anmelden</h1>
+<form [formGroup]="loginForm" class="input-form" (submit)="login($event)">
+  <mat-form-field appearance="fill">
+    <mat-label>Benutzername</mat-label>
+    <input formControlName="userName" matInput />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort</mat-label>
+    <input formControlName="password" matInput />
+  </mat-form-field>
+  <button mat-button>Login</button>
+</form>
