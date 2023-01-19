@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
     const user = this.loginForm.value;
     if (this.authService.login(user.userName, user.password)) {
-      this.router.navigate(["/"]);
+      this.router.navigate(["/admin"]);
     }
   }
 }

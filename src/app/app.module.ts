@@ -31,6 +31,10 @@ import { OrderDialogSuccessComponent } from "./components/order-dialog-success/o
 import { LoginComponent } from "./pages/login/login.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { AdminNavigationComponent } from "./components/admin-navigation/admin-navigation.component";
+import { ShopComponent } from './components/admin/shop/shop.component';
+import { AdminProductListComponent } from './components/admin/admin-product-list/admin-product-list.component';
+import { StatisticsComponent } from './components/admin/statistics/statistics.component';
+import { DiscountsComponent } from './components/admin/discounts/discounts.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +49,10 @@ import { AdminNavigationComponent } from "./components/admin-navigation/admin-na
     LoginComponent,
     AdminNavigationComponent,
     AdminComponent,
+    ShopComponent,
+    AdminProductListComponent,
+    StatisticsComponent,
+    DiscountsComponent,
   ],
   imports: [
     BrowserModule,
