@@ -1,3 +1,4 @@
+import { OrderDialogSuccessComponent } from "./../order-dialog-success/order-dialog-success.component";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
@@ -8,6 +9,8 @@ import { Payment } from "src/app/models/payment";
 import { User } from "src/app/models/user";
 import { ShopService } from "src/app/shared/shop.service";
 import { OrderDialogComponent } from "../order-dialog/order-dialog.component";
+import { OrderDialogFailedComponent } from "../order-dialog-failed/order-dialog-failed.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-order",
@@ -18,6 +21,7 @@ export class OrderComponent implements OnInit {
   cart = new Cart();
   payment = new Payment();
   user = new User();
+  searchUser = new User();
   coupon = new Coupon();
   sum = 0;
   found = false;
@@ -30,17 +34,13 @@ export class OrderComponent implements OnInit {
   constructor(
     private shopService: ShopService,
     private formBuilder: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.shopService.getCart().subscribe((cart) => this.assignMembers(cart));
-
-    this.newUserForm = this.formBuilder.group({
-      firstName: [this.user.firstName, Validators.required],
-      lastName: [this.user.lastName, Validators.required],
-      email: [this.user.email, [Validators.required, Validators.email]],
-    });
+    this.assignCart();
+    this.initUserForm();
     this.initPaymentForm();
   }
 
@@ -48,7 +48,15 @@ export class OrderComponent implements OnInit {
     this.showPayment = !this.showPayment;
   }
 
-  initPaymentForm() {
+  initUserForm(): void {
+    this.newUserForm = this.formBuilder.group({
+      firstName: [this.user.firstName, Validators.required],
+      lastName: [this.user.lastName, Validators.required],
+      email: [this.user.email, [Validators.required, Validators.email]],
+    });
+  }
+
+  initPaymentForm(): void {
     this.paymentForm = this.formBuilder.group({
       cardNumber: [this.payment.cardNumber, Validators.required],
       verificationCode: [this.payment.verificationCode, Validators.required],
@@ -56,19 +64,28 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  assignCart(): void {
+    this.shopService.getCart().subscribe((cart) => this.assignMembers(cart));
+  }
+
   assignMembers(cart: Cart): void {
     this.cart = cart;
-
+    this.sum = 0;
     cart.products?.forEach(
       (p) => (this.sum += (p.price - p.discount) * p.quantity)
     );
 
-    if (cart.id !== 0) {
-      this.shopService.getUser(cart.userId).subscribe((user) => {
-        this.user = user;
-        this.assignPayment(user.id);
-      });
+    if (cart.userId !== 0) {
+      this.assignUser(cart.userId);
     }
+  }
+
+  assignUser(userId: number) {
+    this.changeUser = false;
+    this.shopService.getUser(userId).subscribe((user) => {
+      this.user = user;
+      this.assignPayment(user.id);
+    });
   }
 
   assignPayment(userId: number): void {
@@ -89,24 +106,26 @@ export class OrderComponent implements OnInit {
   searchForUser(email: string): void {
     this.shopService
       .searchForUser(email)
-      .subscribe((user) => this.assignUser(user));
+      .subscribe((user) => this.assignSearchUser(user));
   }
 
-  assignUser(user: User): void {
+  assignSearchUser(user: User): void {
     this.found = true;
-    this.user = user;
-    this.user.cartId = 0;
-    console.log(this.user);
+    this.searchUser = user;
+    this.searchUser.cartId = 0;
   }
 
   setUser() {
-    this.shopService.setUserForCart(this.user.id);
-    this.user.cartId = this.cart.id;
+    this.shopService
+      .setUserForCart(this.cart.id, this.searchUser.id)
+      .subscribe(() => this.assignCart());
   }
   createUser(event: SubmitEvent) {
     event.preventDefault();
-    this.shopService.createUser(this.newUserForm.value);
-    this.shopService.getCart().subscribe((cart) => this.assignMembers(cart));
+    this.shopService
+      .createUser(this.cart.id, this.newUserForm.value)
+      .subscribe((user) => this.assignUser(user.id));
+    // this.shopService.getCart().subscribe((cart) => this.assignMembers(cart));
   }
 
   paymentAction(event: SubmitEvent) {
@@ -126,8 +145,7 @@ export class OrderComponent implements OnInit {
         .updatePayment(this.user.id, paymentDto)
         .subscribe((payment) => (this.payment = payment));
     }
-    console.log(new Date().toISOString());
-    console.log(new Date(this.payment.expiryDate));
+    this.showPayment = false;
   }
 
   redeemCoupon(input: string): void {
@@ -144,20 +162,25 @@ export class OrderComponent implements OnInit {
   }
 
   makeOrder(): void {
+    console.log(this.cart);
     this.shopService.makeOrder(this.cart.id).subscribe({
       next: (resp) => this.openOrder(resp),
-      error: (resp) => this.showError(resp),
+      error: (resp) => this.showError(resp.error),
     });
   }
 
   openOrder(response: CheckoutResponse) {
-    const dialogRef = this.dialog.open(OrderDialogComponent, {
-      data: { response },
+    const dialogRef = this.dialog.open(OrderDialogSuccessComponent, {
+      data: response,
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.shopService.createCart().subscribe();
+      this.router.navigate([""]);
     });
   }
   showError(response: CheckoutResponse) {
-    const dialogRef = this.dialog.open(OrderDialogComponent, {
-      data: { response },
+    this.dialog.open(OrderDialogFailedComponent, {
+      data: response,
     });
   }
 }

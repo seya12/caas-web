@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { concatMap, Observable, of, tap } from "rxjs";
+import { catchError, concatMap, Observable, of, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Cart } from "../models/cart";
 import { CheckoutResponse } from "../models/checkoutResponse";
@@ -40,23 +40,22 @@ export class ShopService {
   public getCart(): Observable<Cart> {
     const cartId = this.getCartIdFromLocalStorage();
     if (!cartId) {
-      return this.createCart().pipe(
+      return this.createCart();
+    }
+
+    return this.httpClient
+      .get<Cart>(`${environment.server}/shops/1/carts/${cartId}`)
+      .pipe(catchError(() => this.createCart()));
+  }
+
+  public createCart(): Observable<Cart> {
+    return this.httpClient
+      .post<Cart>(`${environment.server}/shops/1/carts`, null)
+      .pipe(
         tap((cart) => {
           localStorage.setItem("cartId", JSON.stringify(cart.id));
         })
       );
-    }
-
-    return this.httpClient.get<Cart>(
-      `${environment.server}/shops/1/carts/${cartId}`
-    );
-  }
-
-  public createCart(): Observable<Cart> {
-    return this.httpClient.post<Cart>(
-      `${environment.server}/shops/1/carts`,
-      null
-    );
   }
 
   public addToCart(productId: number, quantity: number): void {
@@ -106,33 +105,20 @@ export class ShopService {
     );
   }
 
-  public setUserForCart(userId: number) {
-    this.getCart()
-      .pipe(
-        concatMap((cart) =>
-          this.httpClient.put(
-            `${environment.server}/shops/1/carts/${cart.id}`,
-            {
-              userId,
-            }
-          )
-        )
-      )
-      .subscribe();
+  public setUserForCart(cartId: number, userId: number): Observable<unknown> {
+    return this.httpClient.put(
+      `${environment.server}/shops/1/carts/${cartId}`,
+      {
+        userId,
+      }
+    );
   }
 
-  public createUser(user: User) {
-    console.log(user);
-    this.getCart()
-      .pipe(
-        concatMap((cart) =>
-          this.httpClient.post<User>(`${environment.server}/shops/1/users`, {
-            ...user,
-            cartId: cart.id,
-          })
-        )
-      )
-      .subscribe();
+  public createUser(cartId: number, user: User): Observable<User> {
+    return this.httpClient.post<User>(`${environment.server}/shops/1/users`, {
+      ...user,
+      cartId: cartId,
+    });
   }
 
   public getPayment(userId: number): Observable<Payment> {
@@ -170,9 +156,11 @@ export class ShopService {
   }
 
   public makeOrder(cartId: number): Observable<CheckoutResponse> {
-    return this.httpClient.post<CheckoutResponse>(
-      `${environment.server}/shops/1/carts/${cartId}/order`,
-      {}
-    );
+    return this.httpClient
+      .post<CheckoutResponse>(
+        `${environment.server}/shops/1/carts/${cartId}/order`,
+        {}
+      )
+      .pipe(tap(() => localStorage.removeItem("cartId")));
   }
 }

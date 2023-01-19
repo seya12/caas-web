@@ -27,6 +27,8 @@ import { OrderComponent } from "./components/order/order.component";
 import { MatNativeDateModule } from "@angular/material/core";
 import { OrderDialogComponent } from "./components/order-dialog/order-dialog.component";
 import { MatDialogModule } from "@angular/material/dialog";
+import { OrderDialogFailedComponent } from './components/order-dialog-failed/order-dialog-failed.component';
+import { OrderDialogSuccessComponent } from './components/order-dialog-success/order-dialog-success.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +39,8 @@ import { MatDialogModule } from "@angular/material/dialog";
     CartComponent,
     OrderComponent,
     OrderDialogComponent,
+    OrderDialogFailedComponent,
+    OrderDialogSuccessComponent,
   ],
   imports: [
     BrowserModule,

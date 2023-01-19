@@ -9,14 +9,14 @@
       <p>Name: {{ user.firstName }} {{ user.lastName }}</p>
       <p>Email: {{ user.email }}</p>
     </div>
-    <button mat-button (click)="onChangePayment()">Ändern</button>
+    <button mat-button (click)="changeUser = !changeUser">Ändern</button>
     <div *ngIf="changeUser">
       <input #email />
       <button (click)="searchForUser(email.value)">Nach Benutzer suchen</button>
       <div *ngIf="found">
-        <p>Vorname: {{ user.firstName }}</p>
-        <p>Nachname: {{ user.lastName }}</p>
-        <p>Email: {{ user.email }}</p>
+        <p>Vorname: {{ searchUser.firstName }}</p>
+        <p>Nachname: {{ searchUser.lastName }}</p>
+        <p>Email: {{ searchUser.email }}</p>
         <button (click)="setUser()">Benutzer verwenden</button>
       </div>
       <button style="display: block" (click)="newUser = true">
