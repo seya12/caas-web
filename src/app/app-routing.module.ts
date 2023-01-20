@@ -1,4 +1,3 @@
-import { TestComponent } from "./components/admin/test/test.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
@@ -10,8 +9,9 @@ import { ProductListComponent } from "./components/product-list/product-list.com
 import { HomeComponent } from "./pages/home/home.component";
 import { ShopComponent } from "./components/admin/shop/shop.component";
 import { AdminProductListComponent } from "./components/admin/admin-product-list/admin-product-list.component";
-import { StatisticsComponent } from "./components/admin/statistics/statistics.component";
 import { DiscountsComponent } from "./components/admin/discounts/discounts.component";
+import { StatisticsDashboardComponent } from "./components/admin/statistics/statistics-dashboard/statistics-dashboard.component";
+import { RevenueComponent } from "./components/admin/statistics/revenue/revenue.component";
 
 const routes: Routes = [
   {
@@ -60,8 +60,13 @@ const routes: Routes = [
       },
       {
         path: "statistics",
-        component: StatisticsComponent,
+        component: StatisticsDashboardComponent,
       },
+      {
+        path: "statistics/revenue",
+        component: RevenueComponent,
+      },
+
       {
         path: "discounts",
         component: DiscountsComponent,

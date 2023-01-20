@@ -33,9 +33,7 @@ import { AdminComponent } from "./pages/admin/admin.component";
 import { AdminNavigationComponent } from "./components/admin-navigation/admin-navigation.component";
 import { ShopComponent } from "./components/admin/shop/shop.component";
 import { AdminProductListComponent } from "./components/admin/admin-product-list/admin-product-list.component";
-import { StatisticsComponent } from "./components/admin/statistics/statistics.component";
 import { DiscountsComponent } from "./components/admin/discounts/discounts.component";
-import { TestComponent } from "./components/admin/test/test.component";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ShopDialogComponent } from "./components/admin/shop-dialog/shop-dialog.component";
@@ -43,6 +41,9 @@ import { MatTableModule } from "@angular/material/table";
 import { ConfirmDialogComponent } from "./components/admin/dialogs/confirm-dialog/confirm-dialog.component";
 import { EditProductDialogComponent } from "./components/admin/dialogs/edit-product-dialog/edit-product-dialog.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { StatisticsDashboardComponent } from "./components/admin/statistics/statistics-dashboard/statistics-dashboard.component";
+import { RevenueComponent } from "./components/admin/statistics/revenue/revenue.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,12 +60,12 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     AdminComponent,
     ShopComponent,
     AdminProductListComponent,
-    StatisticsComponent,
     DiscountsComponent,
-    TestComponent,
     ShopDialogComponent,
     ConfirmDialogComponent,
     EditProductDialogComponent,
+    StatisticsDashboardComponent,
+    RevenueComponent,
   ],
   imports: [
     BrowserModule,
