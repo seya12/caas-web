@@ -27,9 +27,16 @@ export class AdminService {
     return this.httpClient.post<Shop>(`${environment.server}/shops`, name);
   }
   getProducts(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(
-      `${this.serverURL}/products`,
-      this.headers
-    );
+    return this.httpClient.get<Product[]>(`${this.serverURL}/products`, this.headers);
+  }
+  addProduct(product: Product): Observable<Product> {
+    return this.httpClient.post<Product>(`${this.serverURL}/products`, product, this.headers);
+  }
+  updateProduct(product: Product): Observable<unknown> {
+    return this.httpClient.put(`${this.serverURL}/products/${product.id}`, product, this.headers);
+  }
+
+  deleteProduct(productId: number): Observable<unknown> {
+    return this.httpClient.delete(`${this.serverURL}/products/${productId}`, this.headers);
   }
 }

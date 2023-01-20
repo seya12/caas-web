@@ -1,5 +1,7 @@
 <div class="container">
-  <h1 mat-dialog-title>Produkt bearbeiten!</h1>
+  <h1 mat-dialog-title>
+    {{ data.id ? "Produkt bearbeiten" : "Produkt hinzufügen" }}!
+  </h1>
   <form
     mat-dialog-content
     [formGroup]="productForm"
@@ -78,20 +80,18 @@
     </div>
     <div class="row">
       <div class="col">
-        <mat-form-field class="full-width">
-          <mat-label>Aktiv</mat-label>
-          <input matInput placeholder="Aktiv" formControlName="active" />
-          <mat-error
-            *ngIf="productForm.controls['active'].hasError('required')"
-          >
-            Aktiv ist <strong>erforderlich</strong>
-          </mat-error>
-        </mat-form-field>
+        <mat-checkbox formControlName="active">Aktiv</mat-checkbox>
       </div>
     </div>
   </form>
-
   <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      (click)="performAction()"
+      cdkFocusInitial
+    >
+      Ok
+    </button>
   </div>
 </div>

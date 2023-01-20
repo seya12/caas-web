@@ -40,8 +40,9 @@ import { MatRadioModule } from "@angular/material/radio";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ShopDialogComponent } from "./components/admin/shop-dialog/shop-dialog.component";
 import { MatTableModule } from "@angular/material/table";
-import { ConfirmDialogComponent } from './components/admin/dialogs/confirm-dialog/confirm-dialog.component';
-import { EditProductDialogComponent } from './components/admin/dialogs/edit-product-dialog/edit-product-dialog.component';
+import { ConfirmDialogComponent } from "./components/admin/dialogs/confirm-dialog/confirm-dialog.component";
+import { EditProductDialogComponent } from "./components/admin/dialogs/edit-product-dialog/edit-product-dialog.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +89,7 @@ import { EditProductDialogComponent } from './components/admin/dialogs/edit-prod
     MatRadioModule,
     MatSnackBarModule,
     MatTableModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
