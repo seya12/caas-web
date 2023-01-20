@@ -1,3 +1,4 @@
+import { Product } from "src/app/models/product";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
@@ -24,5 +25,11 @@ export class AdminService {
   }
   addShop(name: string): Observable<Shop> {
     return this.httpClient.post<Shop>(`${environment.server}/shops`, name);
+  }
+  getProducts(): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(
+      `${this.serverURL}/products`,
+      this.headers
+    );
   }
 }

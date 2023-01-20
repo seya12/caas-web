@@ -38,7 +38,10 @@ import { DiscountsComponent } from "./components/admin/discounts/discounts.compo
 import { TestComponent } from "./components/admin/test/test.component";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { ShopDialogComponent } from './components/admin/shop-dialog/shop-dialog.component';
+import { ShopDialogComponent } from "./components/admin/shop-dialog/shop-dialog.component";
+import { MatTableModule } from "@angular/material/table";
+import { ConfirmDialogComponent } from './components/admin/dialogs/confirm-dialog/confirm-dialog.component';
+import { EditProductDialogComponent } from './components/admin/dialogs/edit-product-dialog/edit-product-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +62,8 @@ import { ShopDialogComponent } from './components/admin/shop-dialog/shop-dialog.
     DiscountsComponent,
     TestComponent,
     ShopDialogComponent,
+    ConfirmDialogComponent,
+    EditProductDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +87,7 @@ import { ShopDialogComponent } from './components/admin/shop-dialog/shop-dialog.
     MatDialogModule,
     MatRadioModule,
     MatSnackBarModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -4,6 +4,7 @@ export class Product {
     public name?: string,
     public description?: string,
     public downloadLink?: string,
-    public price?: number
+    public price?: number,
+    public active?: boolean
   ) {}
 }

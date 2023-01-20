@@ -1,0 +1,97 @@
+<div class="container">
+  <h1 mat-dialog-title>Produkt bearbeiten!</h1>
+  <form
+    mat-dialog-content
+    [formGroup]="productForm"
+    novalidate
+    (ngSubmit)="performAction()"
+  >
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Id</mat-label>
+          <input
+            matInput
+            placeholder="Id"
+            formControlName="id"
+            readonly="true"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Name" formControlName="name" />
+          <mat-error *ngIf="productForm.controls['name'].hasError('required')">
+            Name ist <strong>erforderlich</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Beschreibung</mat-label>
+          <textarea
+            matInput
+            placeholder="Beschreibung"
+            formControlName="description"
+          ></textarea>
+          <mat-error
+            *ngIf="productForm.controls['description'].hasError('required')"
+          >
+            Beschreibung ist <strong>erforderlich</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Download-Link</mat-label>
+          <input
+            matInput
+            placeholder="Download-Link"
+            formControlName="downloadLink"
+          />
+          <mat-error
+            *ngIf="productForm.controls['downloadLink'].hasError('required')"
+          >
+            Download-Link ist <strong>erforderlich</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Preis</mat-label>
+          <input matInput placeholder="Preis" formControlName="price" />
+          <mat-error *ngIf="productForm.controls['price'].hasError('required')">
+            Preis ist <strong>erforderlich</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Aktiv</mat-label>
+          <input matInput placeholder="Aktiv" formControlName="active" />
+          <mat-error
+            *ngIf="productForm.controls['active'].hasError('required')"
+          >
+            Aktiv ist <strong>erforderlich</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  </div>
+</div>
