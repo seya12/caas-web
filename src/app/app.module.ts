@@ -43,6 +43,7 @@ import { EditProductDialogComponent } from "./components/admin/dialogs/edit-prod
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { StatisticsDashboardComponent } from "./components/admin/statistics/statistics-dashboard/statistics-dashboard.component";
 import { RevenueComponent } from "./components/admin/statistics/revenue/revenue.component";
+import { NgxEchartsModule } from "ngx-echarts";
 
 @NgModule({
   declarations: [
@@ -91,6 +92,14 @@ import { RevenueComponent } from "./components/admin/statistics/revenue/revenue.
     MatSnackBarModule,
     MatTableModule,
     MatCheckboxModule,
+    NgxEchartsModule.forRoot({
+      /**
+       * This will import all modules from echarts.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      echarts: () => import("echarts"), // or import('./path-to-my-custom-echarts')
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

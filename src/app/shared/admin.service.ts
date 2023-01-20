@@ -1,7 +1,7 @@
 import { Product } from "src/app/models/product";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Shop } from "../models/admin/shop";
 
@@ -35,8 +35,18 @@ export class AdminService {
   updateProduct(product: Product): Observable<unknown> {
     return this.httpClient.put(`${this.serverURL}/products/${product.id}`, product, this.headers);
   }
-
   deleteProduct(productId: number): Observable<unknown> {
     return this.httpClient.delete(`${this.serverURL}/products/${productId}`, this.headers);
+  }
+  getRevenue(year: number, month: number): Observable<number> {
+    return this.httpClient
+      .get<any>(`${this.serverURL}/statistics/revenue`, {
+        ...this.headers,
+        params: {
+          year,
+          month,
+        },
+      })
+      .pipe(map((res) => res.revenue));
   }
 }
