@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Shop } from "../models/admin/shop";
+import { BestSellingProduct } from "../models/best-selling-product";
 
 @Injectable({
   providedIn: "root",
@@ -48,5 +49,34 @@ export class AdminService {
         },
       })
       .pipe(map((res) => res.revenue));
+  }
+  getBestSellingProducts(
+    limit: number,
+    year: number,
+    month: number
+  ): Observable<BestSellingProduct[]> {
+    return this.httpClient.get<BestSellingProduct[]>(
+      `${this.serverURL}/statistics/best-selling-products`,
+      {
+        ...this.headers,
+        params: {
+          limit,
+          year,
+          month,
+        },
+      }
+    );
+  }
+
+  getRedeemedCoupons(year: number, month: number): Observable<number> {
+    return this.httpClient
+      .get<any>(`${this.serverURL}/statistics/redeemed-coupons`, {
+        ...this.headers,
+        params: {
+          year,
+          month,
+        },
+      })
+      .pipe(map((res) => res.numberOfRedeemedCoupons));
   }
 }

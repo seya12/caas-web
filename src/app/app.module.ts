@@ -44,6 +44,8 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { StatisticsDashboardComponent } from "./components/admin/statistics/statistics-dashboard/statistics-dashboard.component";
 import { RevenueComponent } from "./components/admin/statistics/revenue/revenue.component";
 import { NgxEchartsModule } from "ngx-echarts";
+import { MostSoldProductsComponent } from './components/admin/statistics/most-sold-products/most-sold-products.component';
+import { RedeemedCouponsComponent } from './components/admin/statistics/redeemed-coupons/redeemed-coupons.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { NgxEchartsModule } from "ngx-echarts";
     EditProductDialogComponent,
     StatisticsDashboardComponent,
     RevenueComponent,
+    MostSoldProductsComponent,
+    RedeemedCouponsComponent,
   ],
   imports: [
     BrowserModule,

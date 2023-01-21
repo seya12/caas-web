@@ -1,3 +1,5 @@
+import { RedeemedCouponsComponent } from "./components/admin/statistics/redeemed-coupons/redeemed-coupons.component";
+import { MostSoldProductsComponent } from "./components/admin/statistics/most-sold-products/most-sold-products.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
@@ -65,6 +67,14 @@ const routes: Routes = [
       {
         path: "statistics/revenue",
         component: RevenueComponent,
+      },
+      {
+        path: "statistics/sold",
+        component: MostSoldProductsComponent,
+      },
+      {
+        path: "statistics/coupons",
+        component: RedeemedCouponsComponent,
       },
 
       {

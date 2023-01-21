@@ -3,11 +3,11 @@ import { EChartsOption } from "echarts";
 import { AdminService } from "src/app/shared/admin.service";
 
 @Component({
-  selector: "app-revenue",
-  templateUrl: "./revenue.component.html",
-  styleUrls: ["./revenue.component.css"],
+  selector: "app-redeemed-coupons",
+  templateUrl: "./redeemed-coupons.component.html",
+  styleUrls: ["./redeemed-coupons.component.css"],
 })
-export class RevenueComponent implements OnInit {
+export class RedeemedCouponsComponent implements OnInit {
   mergeData: any;
   chartOption: EChartsOption = {
     xAxis: {
@@ -20,7 +20,7 @@ export class RevenueComponent implements OnInit {
     series: [
       {
         data: [],
-        type: "bar",
+        type: "line",
       },
     ],
   };
@@ -28,14 +28,14 @@ export class RevenueComponent implements OnInit {
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    const revenues: number[] = [];
+    const coupons: number[] = [];
     for (let i = 1; i <= 12; i++) {
-      this.adminService.getRevenue(2022, i).subscribe((res) => {
-        revenues[i - 1] = res;
+      this.adminService.getRedeemedCoupons(2022, i).subscribe((res) => {
+        coupons[i - 1] = res;
         this.mergeData = {
           series: [
             {
-              data: revenues,
+              data: coupons,
             },
           ],
         };
