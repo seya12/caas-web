@@ -13,10 +13,28 @@ export class StatisticsDashboardComponent {
     map(({ matches }) => {
       if (matches) {
         return [
-          { title: "Card 1", cols: 1, rows: 1, link: "sold" },
-          { title: "Card 2", cols: 1, rows: 1, link: "revenue" },
-          { title: "Card 3", cols: 1, rows: 1, link: "state" },
-          { title: "Card 4", cols: 1, rows: 1, link: "coupons" },
+          {
+            title: "Card 1",
+            cols: 1,
+            rows: 1,
+            link: "sold",
+            body: "Meist verkauften Produkte für 2022",
+          },
+          { title: "Card 2", cols: 1, rows: 1, link: "revenue", body: "Umsatz für 2022" },
+          {
+            title: "Card 3",
+            cols: 1,
+            rows: 1,
+            link: "",
+            body: "Warenkorb-Status für 2022 - noch nicht umgesetzt",
+          },
+          {
+            title: "Card 4",
+            cols: 1,
+            rows: 1,
+            link: "coupons",
+            body: "Eingeöste Coupons für 2022",
+          },
         ];
       }
 
@@ -26,10 +44,23 @@ export class StatisticsDashboardComponent {
           cols: 2,
           rows: 1,
           link: "sold",
+          body: "Meist verkauften Produkte für 2022",
         },
-        { title: "Umsatz", cols: 1, rows: 1, link: "revenue" },
-        { title: "Warenkorb-Status", cols: 1, rows: 2, link: "state" },
-        { title: "Eingelöste Coupons", cols: 1, rows: 1, link: "coupons" },
+        { title: "Umsatz", cols: 1, rows: 1, link: "revenue", body: "Umsatz für 2022" },
+        {
+          title: "Warenkorb-Status",
+          cols: 1,
+          rows: 2,
+          link: "/admin/statistics",
+          body: "Warenkorb-Status für 2022 - noch nicht umgesetzt",
+        },
+        {
+          title: "Eingelöste Coupons",
+          cols: 1,
+          rows: 1,
+          link: "coupons",
+          body: "Eingeöste Coupons für 2022",
+        },
       ];
     })
   );
