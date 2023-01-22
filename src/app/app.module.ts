@@ -1,3 +1,4 @@
+import { CanNavigateToAdminGuard } from "./can-navigate-to-admin.guard";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
@@ -100,7 +101,7 @@ import { OAuthModule } from "angular-oauth2-oidc";
     }),
     OAuthModule.forRoot(),
   ],
-  providers: [],
+  providers: [CanNavigateToAdminGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

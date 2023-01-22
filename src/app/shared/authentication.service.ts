@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { Injectable } from "@angular/core";
 import { OAuthService } from "angular-oauth2-oidc";
 
@@ -5,7 +6,14 @@ import { OAuthService } from "angular-oauth2-oidc";
   providedIn: "root",
 })
 export class AuthenticationService {
-  constructor(private oauthService: OAuthService) {}
+  constructor(private oauthService: OAuthService, private router: Router) {
+    this.oauthService.events.subscribe((event) => {
+      //workaround as we can not open admin after login (guard doesn't wait for result, would need observable)
+      if (event.type === "token_received") {
+        this.router.navigate(["/admin"]);
+      }
+    });
+  }
 
   login(): boolean {
     if (this.isLoggedIn()) return true;

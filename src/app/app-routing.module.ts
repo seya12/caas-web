@@ -13,6 +13,7 @@ import { AdminProductListComponent } from "./components/admin/admin-product-list
 import { DiscountsComponent } from "./components/admin/discounts/discounts.component";
 import { StatisticsDashboardComponent } from "./components/admin/statistics/statistics-dashboard/statistics-dashboard.component";
 import { RevenueComponent } from "./components/admin/statistics/revenue/revenue.component";
+import { CanNavigateToAdminGuard } from "./can-navigate-to-admin.guard";
 
 const routes: Routes = [
   {
@@ -46,6 +47,7 @@ const routes: Routes = [
   {
     path: "admin",
     component: AdminComponent,
+    canActivate: [CanNavigateToAdminGuard],
     children: [
       {
         path: "shop",
