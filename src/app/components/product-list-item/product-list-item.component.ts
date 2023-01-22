@@ -21,10 +21,11 @@ export class ProductListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const params = this.route.snapshot.params;
-    this.shopService
-      .getProduct(params["id"])
-      .subscribe((res) => (this.product = res));
+    this.route.paramMap.subscribe((params) => {
+      this.shopService
+        .getProduct(Number(params.get("id")))
+        .subscribe((res) => (this.product = res));
+    });
   }
 
   addToCart() {

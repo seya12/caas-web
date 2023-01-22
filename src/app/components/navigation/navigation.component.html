@@ -1,16 +1,10 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <div class="home" routerLink="/">
-        <span class="spacer">CaaS-Webshop 1</span>
-      </div>
-      <mat-form-field class="search">
-        <mat-label>Produktsuche</mat-label>
-        <input matInput />
-      </mat-form-field>
-      <mat-icon (click)="login()" class="icon">login</mat-icon>
-      <mat-icon class="icon" routerLink="cart">shopping_cart</mat-icon>
-    </mat-toolbar>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="nav-container">
+  <mat-toolbar color="primary">
+    <div class="home" routerLink="/">
+      <span>CaaS-Webshop 1</span>
+    </div>
+    <app-search-bar class="search"></app-search-bar>
+    <mat-icon (click)="login()" class="icon">login</mat-icon>
+    <mat-icon class="icon" routerLink="cart">shopping_cart</mat-icon>
+  </mat-toolbar>
+</div>

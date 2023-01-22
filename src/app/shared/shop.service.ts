@@ -20,15 +20,17 @@ export class ShopService {
   }
 
   public getProducts(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(
-      `${environment.server}/shops/1/products`
-    );
+    return this.httpClient.get<Product[]>(`${environment.server}/shops/1/products`);
   }
 
   public getProduct(productId: number): Observable<Product> {
-    return this.httpClient.get<Product>(
-      `${environment.server}/shops/1/products/${productId}`
-    );
+    return this.httpClient.get<Product>(`${environment.server}/shops/1/products/${productId}`);
+  }
+
+  public searchForProduct(search: string): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${environment.server}/shops/1/products`, {
+      params: { search },
+    });
   }
 
   public getCartIdFromLocalStorage(): string | null {
@@ -47,13 +49,11 @@ export class ShopService {
   }
 
   public createCart(): Observable<Cart> {
-    return this.httpClient
-      .post<Cart>(`${environment.server}/shops/1/carts`, null)
-      .pipe(
-        tap((cart) => {
-          localStorage.setItem("cartId", JSON.stringify(cart.id));
-        })
-      );
+    return this.httpClient.post<Cart>(`${environment.server}/shops/1/carts`, null).pipe(
+      tap((cart) => {
+        localStorage.setItem("cartId", JSON.stringify(cart.id));
+      })
+    );
   }
 
   public addToCart(productId: number, quantity: number): void {
@@ -67,49 +67,30 @@ export class ShopService {
     );
   }
 
-  public updateCart(
-    cartId: number,
-    productId: number,
-    quantity: number
-  ): Observable<Cart> {
+  public updateCart(cartId: number, productId: number, quantity: number): Observable<Cart> {
     return this.httpClient
-      .put(
-        `${environment.server}/shops/1/carts/${cartId}/products/${productId}`,
-        { quantity }
-      )
+      .put(`${environment.server}/shops/1/carts/${cartId}/products/${productId}`, { quantity })
       .pipe(concatMap(() => this.getCart()));
   }
 
-  public deleteProductFromCart(
-    cartId: number,
-    productId: number
-  ): Observable<Cart> {
+  public deleteProductFromCart(cartId: number, productId: number): Observable<Cart> {
     return this.httpClient
-      .delete(
-        `${environment.server}/shops/1/carts/${cartId}/products/${productId}`
-      )
+      .delete(`${environment.server}/shops/1/carts/${cartId}/products/${productId}`)
       .pipe(concatMap(() => this.getCart()));
   }
 
   public getUser(id: number) {
-    return this.httpClient.get<User>(
-      `${environment.server}/shops/1/users/${id}`
-    );
+    return this.httpClient.get<User>(`${environment.server}/shops/1/users/${id}`);
   }
 
   public searchForUser(email: string) {
-    return this.httpClient.get<User>(
-      `${environment.server}/shops/1/users?email=${email}`
-    );
+    return this.httpClient.get<User>(`${environment.server}/shops/1/users?email=${email}`);
   }
 
   public setUserForCart(cartId: number, userId: number): Observable<unknown> {
-    return this.httpClient.put(
-      `${environment.server}/shops/1/carts/${cartId}`,
-      {
-        userId,
-      }
-    );
+    return this.httpClient.put(`${environment.server}/shops/1/carts/${cartId}`, {
+      userId,
+    });
   }
 
   public createUser(cartId: number, user: User): Observable<User> {
@@ -120,9 +101,7 @@ export class ShopService {
   }
 
   public getPayment(userId: number): Observable<Payment> {
-    return this.httpClient.get<Payment>(
-      `${environment.server}/shops/1/users/${userId}/payments`
-    );
+    return this.httpClient.get<Payment>(`${environment.server}/shops/1/users/${userId}/payments`);
   }
   public addPayment(userId: number, payment: Payment): Observable<Payment> {
     return this.httpClient.post<Payment>(
@@ -133,18 +112,15 @@ export class ShopService {
 
   public updatePayment(userId: number, payment: Payment): Observable<Payment> {
     return this.httpClient
-      .put(
-        `${environment.server}/shops/1/users/${userId}/payments/${payment.id}`,
-        payment
-      )
+      .put(`${environment.server}/shops/1/users/${userId}/payments/${payment.id}`, payment)
       .pipe(concatMap(() => this.getPayment(userId)));
   }
 
   public redeemCoupon(cartId: number, code: string): Observable<Coupon> {
-    return this.httpClient.post<Coupon>(
-      `${environment.server}/shops/1/coupons/redeem`,
-      { cartId, code }
-    );
+    return this.httpClient.post<Coupon>(`${environment.server}/shops/1/coupons/redeem`, {
+      cartId,
+      code,
+    });
   }
 
   public deleteCoupon(cartId: number, code: string): Observable<unknown> {
@@ -155,10 +131,7 @@ export class ShopService {
 
   public makeOrder(cartId: number): Observable<CheckoutResponse> {
     return this.httpClient
-      .post<CheckoutResponse>(
-        `${environment.server}/shops/1/carts/${cartId}/order`,
-        {}
-      )
+      .post<CheckoutResponse>(`${environment.server}/shops/1/carts/${cartId}/order`, {})
       .pipe(tap(() => localStorage.removeItem("cartId")));
   }
 }

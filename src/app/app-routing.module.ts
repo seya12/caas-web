@@ -30,12 +30,16 @@ const routes: Routes = [
         component: CartComponent,
       },
       {
-        path: "",
+        path: "products",
         component: ProductListComponent,
       },
       {
-        path: ":id",
+        path: "products/:id",
         component: ProductListItemComponent,
+      },
+      {
+        path: "",
+        component: ProductListComponent,
       },
     ],
   },
@@ -90,28 +94,6 @@ const routes: Routes = [
     redirectTo: "home",
     pathMatch: "full",
   },
-
-  // {
-  //   path: 'books',
-  //   component: BookListComponent,
-  // },
-  // {
-  //   path: 'books/:id',
-  //   component: BookDetailsComponent,
-  // },
-  // {
-  //   path: 'admin',
-  //   component: BookFormComponent,
-  //   canActivate: [CanNavigateToAdminGuard],
-  // },
-  // {
-  //   path: 'adminR/:id',
-  //   component: BookRformComponent,
-  // },
-  // {
-  //   path: 'login',
-  //   component: LoginComponent,
-  // },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

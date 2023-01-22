@@ -47,6 +47,7 @@ import { NgxEchartsModule } from "ngx-echarts";
 import { MostSoldProductsComponent } from "./components/admin/statistics/most-sold-products/most-sold-products.component";
 import { RedeemedCouponsComponent } from "./components/admin/statistics/redeemed-coupons/redeemed-coupons.component";
 import { OAuthModule } from "angular-oauth2-oidc";
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { OAuthModule } from "angular-oauth2-oidc";
     RevenueComponent,
     MostSoldProductsComponent,
     RedeemedCouponsComponent,
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,22 @@
+.form-field{
+  width: 100%;
+justify-content: center;
+justify-self: center;
+}
+
+.result-container{
+  display: block;
+  position: absolute;
+  color: black;
+  background: whitesmoke;
+  width: 50%;
+  z-index: 1;
+}
+.mat-mdc-form-field-bottom-align::before{
+display: none !important;
+}
+
+.result-line:hover{
+  cursor: pointer;
+  background-color: lightgrey;
+}

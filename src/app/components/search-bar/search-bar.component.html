@@ -1,0 +1,13 @@
+<div>
+  <mat-form-field appearance="fill" class="form-field">
+    <mat-label>Produktsuche</mat-label>
+    <input matInput #searchTerm (keyup)="myKeyup.emit(searchTerm.value)" />
+  </mat-form-field>
+</div>
+<div class="result-container" *ngIf="foundProducts.length && searchTerm.value !== ''">
+  <a (click)="openProduct(product.id!)" *ngFor="let product of foundProducts">
+    <div class="result-line">
+      {{ product.name }}
+    </div>
+  </a>
+</div>
