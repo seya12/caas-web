@@ -1,21 +1,24 @@
 import { Injectable } from "@angular/core";
+import { OAuthService } from "angular-oauth2-oidc";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthenticationService {
-  constructor() {}
+  constructor(private oauthService: OAuthService) {}
 
-  login(username: string, password: string): boolean {
-    // if (username == 'test' && password == 'test') {
-    sessionStorage.setItem("login", "true");
-    //   return true;
-    // }
-    // return false;
+  login(): boolean {
+    if (this.isLoggedIn()) return true;
+
+    this.oauthService.initCodeFlow();
     return true;
   }
 
   isLoggedIn(): boolean {
-    return sessionStorage.getItem("login") !== null;
+    return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken();
+  }
+
+  logout() {
+    this.oauthService.logOut();
   }
 }

@@ -26,10 +26,10 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <div class="home" routerLink="/admin">
+      <div class="home" routerLink="/">
         <span class="spacer">CaaS-Webshop 1</span>
       </div>
-      <mat-icon class="icon" routerLink="/">logout</mat-icon>
+      <mat-icon class="icon" (click)="logout()">logout</mat-icon>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

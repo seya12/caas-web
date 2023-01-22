@@ -8,7 +8,7 @@
         <mat-label>Produktsuche</mat-label>
         <input matInput />
       </mat-form-field>
-      <mat-icon class="icon" routerLink="/login">login</mat-icon>
+      <mat-icon (click)="login()" class="icon">login</mat-icon>
       <mat-icon class="icon" routerLink="cart">shopping_cart</mat-icon>
     </mat-toolbar>
     <router-outlet></router-outlet>

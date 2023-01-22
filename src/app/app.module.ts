@@ -28,7 +28,6 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import { OrderDialogFailedComponent } from "./components/order-dialog-failed/order-dialog-failed.component";
 import { OrderDialogSuccessComponent } from "./components/order-dialog-success/order-dialog-success.component";
-import { LoginComponent } from "./pages/login/login.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { AdminNavigationComponent } from "./components/admin-navigation/admin-navigation.component";
 import { ShopComponent } from "./components/admin/shop/shop.component";
@@ -44,8 +43,9 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { StatisticsDashboardComponent } from "./components/admin/statistics/statistics-dashboard/statistics-dashboard.component";
 import { RevenueComponent } from "./components/admin/statistics/revenue/revenue.component";
 import { NgxEchartsModule } from "ngx-echarts";
-import { MostSoldProductsComponent } from './components/admin/statistics/most-sold-products/most-sold-products.component';
-import { RedeemedCouponsComponent } from './components/admin/statistics/redeemed-coupons/redeemed-coupons.component';
+import { MostSoldProductsComponent } from "./components/admin/statistics/most-sold-products/most-sold-products.component";
+import { RedeemedCouponsComponent } from "./components/admin/statistics/redeemed-coupons/redeemed-coupons.component";
+import { OAuthModule } from "angular-oauth2-oidc";
 
 @NgModule({
   declarations: [
@@ -58,7 +58,6 @@ import { RedeemedCouponsComponent } from './components/admin/statistics/redeemed
     OrderComponent,
     OrderDialogFailedComponent,
     OrderDialogSuccessComponent,
-    LoginComponent,
     AdminNavigationComponent,
     AdminComponent,
     ShopComponent,
@@ -97,13 +96,9 @@ import { RedeemedCouponsComponent } from './components/admin/statistics/redeemed
     MatTableModule,
     MatCheckboxModule,
     NgxEchartsModule.forRoot({
-      /**
-       * This will import all modules from echarts.
-       * If you only need custom modules,
-       * please refer to [Custom Build] section.
-       */
       echarts: () => import("echarts"), // or import('./path-to-my-custom-echarts')
     }),
+    OAuthModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

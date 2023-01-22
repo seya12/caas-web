@@ -4,7 +4,6 @@ import { AdminComponent } from "./pages/admin/admin.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CartComponent } from "./components/cart/cart.component";
-import { LoginComponent } from "./pages/login/login.component";
 import { OrderComponent } from "./pages/order/order.component";
 import { ProductListItemComponent } from "./components/product-list-item/product-list-item.component";
 import { ProductListComponent } from "./components/product-list/product-list.component";
@@ -42,10 +41,6 @@ const routes: Routes = [
   {
     path: "order",
     component: OrderComponent,
-  },
-  {
-    path: "login",
-    component: LoginComponent,
   },
 
   {

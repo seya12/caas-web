@@ -11,12 +11,10 @@ import { AuthenticationService } from "src/app/shared/authentication.service";
 })
 export class AdminNavigationComponent implements OnInit {
   adminLogin = false;
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map((result) => result.matches),
+    shareReplay()
+  );
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -25,5 +23,9 @@ export class AdminNavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminLogin = this.authService.isLoggedIn();
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
