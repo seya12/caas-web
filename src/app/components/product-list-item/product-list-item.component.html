@@ -7,7 +7,7 @@
   <mat-grid-tile>
     <div class="product-info">
       <h1 class="mat-headline-2">{{ product.name }}</h1>
-      <h2 class="mat-headline-4">{{ product.price }}€</h2>
+      <h2 class="mat-headline-4">{{ product.price | currency : "EUR" }}</h2>
       <p>{{ product.description }}</p>
     </div>
   </mat-grid-tile>
@@ -21,12 +21,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button
-        mat-raised-button
-        color="accent"
-        (click)="addToCart()"
-        [disabled]="quantity === 0"
-      >
+      <button mat-raised-button color="accent" (click)="addToCart()" [disabled]="quantity === 0">
         In den Einkaufswagen
       </button>
     </div>

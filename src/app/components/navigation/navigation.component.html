@@ -1,10 +1,10 @@
-<div class="nav-container">
-  <mat-toolbar color="primary">
-    <div class="home" routerLink="/">
-      <span>CaaS-Webshop 1</span>
-    </div>
-    <app-search-bar class="search"></app-search-bar>
-    <mat-icon (click)="login()" class="icon">login</mat-icon>
+<mat-toolbar class="nav-container" color="primary">
+  <div class="home flex-item" routerLink="/">
+    <span>CaaS-Webshop 1</span>
+  </div>
+  <app-search-bar class="search"></app-search-bar>
+  <div class="flex-item icon-container">
+    <mat-icon class="icon" (click)="login()">login</mat-icon>
     <mat-icon class="icon" routerLink="cart">shopping_cart</mat-icon>
-  </mat-toolbar>
-</div>
+  </div>
+</mat-toolbar>
