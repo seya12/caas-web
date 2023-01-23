@@ -56,14 +56,14 @@ export class ShopService {
     );
   }
 
-  public addToCart(productId: number, quantity: number): void {
-    this.getCart().subscribe((cart) =>
-      this.httpClient
-        .post<Cart>(`${environment.server}/shops/1/carts/${cart.id}/products`, {
+  public addToCart(productId: number, quantity: number): Observable<Cart> {
+    return this.getCart().pipe(
+      concatMap((cart) =>
+        this.httpClient.post<Cart>(`${environment.server}/shops/1/carts/${cart.id}/products`, {
           productId,
           quantity,
         })
-        .subscribe()
+      )
     );
   }
 

@@ -5,6 +5,7 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
+  text-align: center;
 }
 
 h1{
@@ -19,4 +20,17 @@ h1{
 
 .custom-image{
   object-fit: cover;
+    max-width: 100%;
+  height: auto;
+}
+
+.container{
+  margin: 5%;
+}
+.mat-headline-2{
+  margin-bottom: 10px ;
+}
+
+.input-quantity{
+  margin-bottom: 15px;
 }

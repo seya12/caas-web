@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatSelectChange } from "@angular/material/select";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Cart } from "src/app/models/cart";
 import { ShopService } from "src/app/shared/shop.service";
 
@@ -14,10 +15,9 @@ export class CartComponent implements OnInit {
   quantityOptions: number[];
   quantity = 0;
   count = 0;
-  sum = "0";
-  //TODO: visualize currencies better
+  sum = 0;
 
-  constructor(private shopService: ShopService) {
+  constructor(private shopService: ShopService, private snackBar: MatSnackBar) {
     this.quantityOptions = [...Array(10).keys()].map((i) => i + 1);
   }
 
@@ -26,30 +26,27 @@ export class CartComponent implements OnInit {
   }
 
   assignMembers(cart: Cart): void {
-    let sum = 0;
+    this.sum = 0;
     this.count = 0;
     this.cart = cart;
 
     cart.products?.forEach((p) => {
-      sum += (p.price - p.discount) * p.quantity;
+      this.sum += (p.price - p.discount) * p.quantity;
       this.count += p.quantity;
     });
-
-    this.sum = new Intl.NumberFormat("de-DE", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(sum);
   }
 
   deleteProduct(productId: number): void {
-    this.shopService
-      .deleteProductFromCart(this.cart.id, productId)
-      .subscribe((cart) => this.assignMembers(cart));
+    this.shopService.deleteProductFromCart(this.cart.id, productId).subscribe((cart) => {
+      this.assignMembers(cart);
+      this.snackBar.open("Produkt erfolgreich gelöscht!", "Schließen", { duration: 5000 });
+    });
   }
 
   update(event: MatSelectChange, productId: number): void {
-    this.shopService
-      .updateCart(this.cart.id, productId, event.value)
-      .subscribe((cart) => this.assignMembers(cart));
+    this.shopService.updateCart(this.cart.id, productId, event.value).subscribe((cart) => {
+      this.assignMembers(cart);
+      this.snackBar.open("Menge erfolgreich angepasst!", "Schließen", { duration: 5000 });
+    });
   }
 }

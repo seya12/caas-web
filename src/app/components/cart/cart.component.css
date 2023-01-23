@@ -1,11 +1,26 @@
+.mat-headline-2{
+  margin: 16px;
+}
+
 .row {
   display: flex;
+  margin-left: 16px;
 }
 
 .column-1{
-  flex: 80%;
+  flex: 70%;
 }
 
 .column-2{
-  flex: 20%;
+  flex: 30%;
+  text-align: center;
+}
+
+.product-info{
+  margin-bottom: 16px;
+  margin-right: 16px;
+}
+
+.button-delete{
+  margin-right: 16px;
 }

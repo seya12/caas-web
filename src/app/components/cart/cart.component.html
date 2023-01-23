@@ -1,13 +1,13 @@
-<h1>Einkaufswagen</h1>
+<h1 class="mat-headline-2">Einkaufswagen</h1>
 <div class="row">
   <div class="column-1">
     <mat-card *ngFor="let product of cart.products">
       <mat-card-header>
         <mat-card-title>{{ product.name }}</mat-card-title>
         <mat-card-title
-          >{{ product.price - product.discount }}€
+          >{{ product.price - product.discount | currency : "EUR" }}
           <span style="text-decoration: line-through" *ngIf="product.discount !== 0">{{
-            product.price
+            product.price | currency : "EUR"
           }}</span></mat-card-title
         >
       </mat-card-header>
@@ -26,12 +26,14 @@
           </mat-form-field>
         </div>
 
-        <button mat-button (click)="deleteProduct(product.productId)">Löschen</button>
+        <div class="button-delete">
+          <button mat-raised-button (click)="deleteProduct(product.productId)">Löschen</button>
+        </div>
       </mat-card-actions>
     </mat-card>
   </div>
   <div class="column-2">
-    <p>Summe {{ count }} Artikel: {{ sum | currency : "EUR" }} €</p>
+    <p class="mat-headline-6">Summe {{ count }} Artikel: {{ sum | currency : "EUR" }}</p>
     <button mat-raised-button color="accent" routerLink="/order">Zur Kasse gehen</button>
   </div>
 </div>

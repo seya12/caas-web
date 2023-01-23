@@ -1,5 +1,6 @@
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Product } from "src/app/models/product";
 import { ShopService } from "src/app/shared/shop.service";
 
@@ -15,7 +16,7 @@ export class ProductListItemComponent implements OnInit {
   constructor(
     private shopService: ShopService,
     private route: ActivatedRoute,
-    private router: Router
+    private snackBar: MatSnackBar
   ) {
     this.quantityOptions = [...Array(10).keys()].map((i) => i + 1);
   }
@@ -29,7 +30,15 @@ export class ProductListItemComponent implements OnInit {
   }
 
   addToCart() {
-    this.shopService.addToCart(this.product.id as number, this.quantity);
+    this.shopService.addToCart(this.product.id as number, this.quantity).subscribe({
+      next: () => {
+        this.snackBar.open("Produkt erfolgreich hinzugefügt!", "Schließen", { duration: 5000 });
+        this.quantity = 0;
+      },
+      error: () => {
+        this.snackBar.open("Fehler beim Hinzufügen!", "Schließen", { duration: 5000 });
+      },
+    });
     //TODO: Feedback
   }
 }
