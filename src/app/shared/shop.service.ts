@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, concatMap, Observable, of, tap } from "rxjs";
+import { catchError, concatMap, Observable, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Cart } from "../models/cart";
 import { CheckoutResponse } from "../models/checkoutResponse";
@@ -13,11 +13,6 @@ import { User } from "../models/user";
 })
 export class ShopService {
   constructor(private httpClient: HttpClient) {}
-
-  private errorHandler(error: Error | any): Observable<any> {
-    console.log(error);
-    return of(error);
-  }
 
   public getProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(`${environment.server}/shops/1/products`);
