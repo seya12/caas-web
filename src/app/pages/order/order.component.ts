@@ -27,6 +27,7 @@ export class OrderComponent implements OnInit {
   newUser = false;
   changeUser = false;
   showPayment = false;
+  showProgressbar = false;
   newUserForm!: FormGroup;
   paymentForm!: FormGroup;
 
@@ -70,9 +71,7 @@ export class OrderComponent implements OnInit {
   assignMembers(cart: Cart): void {
     this.cart = cart;
     this.sum = 0;
-    cart.products?.forEach(
-      (p) => (this.sum += (p.price - p.discount) * p.quantity)
-    );
+    cart.products?.forEach((p) => (this.sum += (p.price - p.discount) * p.quantity));
 
     if (cart.userId !== 0) {
       this.assignUser(cart.userId);
@@ -103,9 +102,7 @@ export class OrderComponent implements OnInit {
   }
 
   searchForUser(email: string): void {
-    this.shopService
-      .searchForUser(email)
-      .subscribe((user) => this.assignSearchUser(user));
+    this.shopService.searchForUser(email).subscribe((user) => this.assignSearchUser(user));
   }
 
   assignSearchUser(user: User): void {
@@ -123,7 +120,7 @@ export class OrderComponent implements OnInit {
     event.preventDefault();
     this.shopService
       .createUser(this.cart.id, this.newUserForm.value)
-      .subscribe((user) => this.assignUser(user.id));
+      .subscribe(() => this.assignCart());
     // this.shopService.getCart().subscribe((cart) => this.assignMembers(cart));
   }
 
@@ -149,7 +146,6 @@ export class OrderComponent implements OnInit {
 
   redeemCoupon(input: string): void {
     this.shopService.redeemCoupon(this.cart.id, input).subscribe((coupon) => {
-      console.log(coupon);
       this.coupon = coupon;
     });
   }
@@ -161,10 +157,11 @@ export class OrderComponent implements OnInit {
   }
 
   makeOrder(): void {
-    console.log(this.cart);
+    this.showProgressbar = true;
     this.shopService.makeOrder(this.cart.id).subscribe({
       next: (resp) => this.openOrder(resp),
       error: (resp) => this.showError(resp.error),
+      complete: () => (this.showProgressbar = false),
     });
   }
 
@@ -178,6 +175,7 @@ export class OrderComponent implements OnInit {
     });
   }
   showError(response: CheckoutResponse) {
+    this.showProgressbar = false;
     this.dialog.open(OrderDialogFailedComponent, {
       data: response,
     });

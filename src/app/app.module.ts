@@ -47,7 +47,8 @@ import { NgxEchartsModule } from "ngx-echarts";
 import { MostSoldProductsComponent } from "./components/admin/statistics/most-sold-products/most-sold-products.component";
 import { RedeemedCouponsComponent } from "./components/admin/statistics/redeemed-coupons/redeemed-coupons.component";
 import { OAuthModule } from "angular-oauth2-oidc";
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { SearchBarComponent } from "./components/search-bar/search-bar.component";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     MatSnackBarModule,
     MatTableModule,
     MatCheckboxModule,
+    MatProgressBarModule,
     NgxEchartsModule.forRoot({
       echarts: () => import("echarts"), // or import('./path-to-my-custom-echarts')
     }),

@@ -39,6 +39,5 @@ export class ProductListItemComponent implements OnInit {
         this.snackBar.open("Fehler beim Hinzufügen!", "Schließen", { duration: 5000 });
       },
     });
-    //TODO: Feedback
   }
 }

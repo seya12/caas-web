@@ -1,17 +1,98 @@
+.nav-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.home {
+  cursor: pointer;
+}
+
+.nav-container > .flex-item-1{
+    padding-left: 5%;
+    flex: 0 1 30%;
+}
+
+.nav-container > .flex-item-2{
+  flex: 1 1 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.nav-container > .flex-item-3{
+  flex: 0 1 30%;
+}
+
+.mat-headline-3{
+  margin: 0;
+}
+
+.order-container{
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 16px;
+}
+
 .row {
   display: flex;
 }
 
 .column-1{
-  flex: 80%;
+  flex: 70%;
 }
 
 .column-2{
-  flex: 20%;
+  flex: 30%;
+  text-align: center;
+}
+
+.align-left{
+  text-align: left;
+}
+.align-right{
+  text-align: right;
+}
+.user-input{
+  margin-top: 16px;
+}
+
+.user-display{
+  margin-left: 16px;
+}
+
+
+.group-container{
+  margin-bottom: 16px;
 }
 
 .input-form{
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+.header-container{
+  display: flex;
+  flex-direction: row;
+}
+.mat-headline-4{
+  margin: 16px 0;
+}
+.amount{
+  margin-bottom: 16px;
+}
+
+.form-input{
+  margin-right: 10px;
+}
+
+.redeem-button{
+  margin-right: 10px;
+}
+
+.form-row{
+  margin-bottom: 5px;
+}
+
+.payment-button{
+  margin-top: 10px;
 }

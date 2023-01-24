@@ -1,135 +1,167 @@
-<div class="header">
-  <a routerLink="/home/cart">click me</a>
-  <h1>Deine Bestellung</h1>
-</div>
-<div class="row">
-  <div class="column-1">
-    <h2 (click)="newUser = false">Benutzer-Daten</h2>
-    <div *ngIf="user.cartId !== 0">
-      <p>Name: {{ user.firstName }} {{ user.lastName }}</p>
-      <p>Email: {{ user.email }}</p>
-    </div>
-    <button mat-button (click)="changeUser = !changeUser">Ändern</button>
-    <div *ngIf="changeUser">
-      <input #email />
-      <button (click)="searchForUser(email.value)">Nach Benutzer suchen</button>
-      <div *ngIf="found">
-        <p>Vorname: {{ searchUser.firstName }}</p>
-        <p>Nachname: {{ searchUser.lastName }}</p>
-        <p>Email: {{ searchUser.email }}</p>
-        <button (click)="setUser()">Benutzer verwenden</button>
+<mat-toolbar class="nav-container">
+  <div class="home flex-item-1" routerLink="/home/cart">
+    <span>CaaS-Webshop 1</span>
+  </div>
+  <div class="flex-item-2 headline-container">
+    <h1 class="mat-headline-3">Deine Bestellung</h1>
+  </div>
+  <div class="flex-item-3"></div>
+</mat-toolbar>
+
+<div class="order-container">
+  <div class="row">
+    <div class="column-1">
+      <div class="group-container">
+        <h2 (click)="newUser = false">Benutzer-Daten</h2>
+
+        <div class="user-display" *ngIf="user.cartId !== 0">
+          <p>Name: {{ user.firstName }} {{ user.lastName }}</p>
+          <p>Email: {{ user.email }}</p>
+        </div>
+
+        <button class="add-button" mat-button color="primary" (click)="changeUser = !changeUser">
+          Ändern
+        </button>
+
+        <div *ngIf="changeUser">
+          <div class="user-search">
+            <mat-form-field class="user-input form-input">
+              <mat-label>Benutzer-Email</mat-label>
+              <input matInput #email />
+            </mat-form-field>
+            <button mat-raised-button (click)="searchForUser(email.value)">
+              Nach Benutzer suchen
+            </button>
+          </div>
+          <div *ngIf="found">
+            <p>Vorname: {{ searchUser.firstName }}</p>
+            <p>Nachname: {{ searchUser.lastName }}</p>
+            <p>Email: {{ searchUser.email }}</p>
+            <button mat-raised-button (click)="setUser()">Benutzer verwenden</button>
+          </div>
+          <div class="new-user-container" *ngIf="cart.userId === 0">
+            <button class="add-button" mat-button color="primary" (click)="newUser = !newUser">
+              Neuen hinzufügen
+            </button>
+            <div *ngIf="newUser">
+              <form [formGroup]="newUserForm" class="input-form" (submit)="createUser($event)">
+                <mat-form-field appearance="fill">
+                  <mat-label>Vorname</mat-label>
+                  <input formControlName="firstName" matInput />
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Nachname</mat-label>
+                  <input formControlName="lastName" matInput />
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input formControlName="email" matInput />
+                  <mat-error *ngIf="newUserForm.controls['email'].invalid"
+                    >Ungültige Email-Adresse!</mat-error
+                  >
+                </mat-form-field>
+                <button
+                  class="add-button"
+                  mat-raised-button
+                  type="submit"
+                  [disabled]="!newUserForm.valid"
+                >
+                  Absenden
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-      <button style="display: block" (click)="newUser = true">
-        Neuen hinzufügen
-      </button>
-      <div *ngIf="newUser">
-        <form
-          [formGroup]="newUserForm"
-          class="input-form"
-          (submit)="createUser($event)"
-        >
-          <mat-form-field appearance="fill">
-            <mat-label>Vorname</mat-label>
-            <input formControlName="firstName" matInput />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Nachname</mat-label>
-            <input formControlName="lastName" matInput />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input formControlName="email" matInput />
-            <mat-error *ngIf="newUserForm.controls['email'].invalid"
-              >Ungültige Email-Adresse!</mat-error
+
+      <mat-divider></mat-divider>
+
+      <div class="group-container">
+        <h2>Zahlungsart</h2>
+        <div class="user-display" *ngIf="payment.id !== 0">
+          <p>Kreditkarte mit Nummer {{ payment.cardNumber }}</p>
+        </div>
+        <button mat-button color="primary" (click)="showPayment = !showPayment">
+          {{ payment.id !== 0 ? "Ändern" : "Erstellen" }}
+        </button>
+        <div *ngIf="showPayment">
+          <form [formGroup]="paymentForm" class="input-form" (submit)="paymentAction($event)">
+            <mat-form-field appearance="fill" class="form-row">
+              <mat-label>Kartennummer</mat-label>
+              <input formControlName="cardNumber" matInput />
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-row">
+              <mat-label>Verifizierungscode</mat-label>
+              <input formControlName="verificationCode" matInput />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Ablaufdatum</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="expiryDate" />
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+            </mat-form-field>
+            <button
+              mat-raised-button
+              type="submit"
+              [disabled]="!paymentForm.valid"
+              class="payment-button"
             >
-          </mat-form-field>
-          <button
-            mat-raised-button
-            type="submit"
-            [disabled]="!newUserForm.valid"
-          >
-            Absenden
-          </button>
-        </form>
+              Absenden
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
-    <div>
-      <h2>Zahlungsart</h2>
-      <div *ngIf="payment.id !== 0">
-        <p>Kreditkarte mit Nummer {{ payment.cardNumber }}</p>
-      </div>
-      <button mat-button (click)="showPayment = !showPayment">
-        {{ payment.id !== 0 ? "Ändern" : "Erstellen" }}
-      </button>
-      <div *ngIf="showPayment">
-        <form
-          [formGroup]="paymentForm"
-          class="input-form"
-          (submit)="paymentAction($event)"
-        >
-          <mat-form-field appearance="fill">
-            <mat-label>Kartennummer</mat-label>
-            <input formControlName="cardNumber" matInput />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Verifizierungscode</mat-label>
-            <input formControlName="verificationCode" matInput />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Ablaufdatum</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="expiryDate"
-            />
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker startView="multi-year"></mat-datepicker>
-          </mat-form-field>
-          <button
-            mat-raised-button
-            type="submit"
-            [disabled]="!paymentForm.valid"
-          >
-            Absenden
-          </button>
-        </form>
-      </div>
-      <div>
-        <input #couponInput />
+      <mat-divider></mat-divider>
+      <div class="group-container">
+        <h2>Coupons</h2>
+        <mat-form-field class="form-input">
+          <mat-label>Coupon</mat-label>
+          <input matInput #couponInput />
+        </mat-form-field>
         <button
+          mat-raised-button
+          class="redeem-button"
           [disabled]="coupon.value !== 0"
           (click)="redeemCoupon(couponInput.value)"
         >
           Coupon Einlösen
         </button>
-        <button [disabled]="coupon.value === 0" (click)="deleteCoupon()">
+        <button mat-raised-button [disabled]="coupon.value === 0" (click)="deleteCoupon()">
           Coupon Entfernen
         </button>
       </div>
+      <mat-divider></mat-divider>
+
+      <mat-progress-bar mode="indeterminate" *ngIf="showProgressbar"></mat-progress-bar>
+
+      <h2 class="mat-headline-4">Artikel überprüfen</h2>
+      <mat-card *ngFor="let product of cart.products">
+        <mat-card-header>
+          <mat-card-title class="mat-headline-5">{{ product.name }}</mat-card-title>
+          <mat-card-title
+            >{{ product.price - product.discount | currency : "EUR" }}
+          </mat-card-title>
+          <mat-card-title class="amount">Menge: {{ product.quantity }}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
     </div>
-    <h2>Artikel überprüfen</h2>
-    <mat-card *ngFor="let product of cart.products">
-      <mat-card-header>
-        <mat-card-title>{{ product.name }}</mat-card-title>
-        <mat-card-title
-          >{{ product.price - product.discount | currency : "EUR" }}
-        </mat-card-title>
-        <mat-card-title>Menge: {{ product.quantity }}</mat-card-title>
-      </mat-card-header>
-    </mat-card>
-  </div>
-  <div class="column-2">
-    <div *ngIf="coupon.value !== 0">
-      <p>Summe: {{ sum | currency : "EUR" }}</p>
-      <p>Gutschein eingelöst: - {{ coupon.value | currency : "EUR" }}</p>
+    <div class="column-2">
+      <div *ngIf="coupon.value !== 0" class="row">
+        <p class="column-1 mat-headline-6 align-left">Summe:</p>
+        <p class="column-2 mat-headline-6 align-right">{{ sum | currency : "EUR" }}</p>
+      </div>
+      <div *ngIf="coupon.value !== 0" class="row">
+        <p class="column-1 mat-headline-6 align-left">Gutschein:</p>
+        <p class="column-2 mat-headline-6 align-right">-{{ coupon.value | currency : "EUR" }}</p>
+      </div>
+      <div class="row">
+        <p class="column-1 mat-headline-6 align-left">Gesamtbetrag:</p>
+        <p class="column-2 mat-headline-6 align-right">
+          {{ sum - coupon.value | currency : "EUR" }}
+        </p>
+      </div>
+      <button mat-raised-button color="accent" (click)="makeOrder()">Bestellen</button>
     </div>
-    <p>Gesamtbetrag: {{ sum - coupon.value | currency : "EUR" }}</p>
-    <button mat-raised-button color="accent" (click)="makeOrder()">
-      Bestellen
-    </button>
   </div>
 </div>
