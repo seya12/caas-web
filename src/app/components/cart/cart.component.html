@@ -34,6 +34,8 @@
   </div>
   <div class="column-2">
     <p class="mat-headline-6">Summe {{ count }} Artikel: {{ sum | currency : "EUR" }}</p>
-    <button mat-raised-button color="accent" routerLink="/order">Zur Kasse gehen</button>
+    <button mat-raised-button color="accent" routerLink="/order" [disabled]="sum === 0">
+      Zur Kasse gehen
+    </button>
   </div>
 </div>
