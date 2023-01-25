@@ -45,15 +45,15 @@
             </button>
             <div *ngIf="newUser">
               <form [formGroup]="newUserForm" class="input-form" (submit)="createUser($event)">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill" subscriptSizing="dynamic">
                   <mat-label>Vorname</mat-label>
                   <input formControlName="firstName" matInput />
                 </mat-form-field>
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill" subscriptSizing="dynamic">
                   <mat-label>Nachname</mat-label>
                   <input formControlName="lastName" matInput />
                 </mat-form-field>
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill" subscriptSizing="dynamic">
                   <mat-label>Email</mat-label>
                   <input formControlName="email" matInput />
                   <mat-error *ngIf="newUserForm.controls['email'].invalid"
@@ -86,15 +86,15 @@
         </button>
         <div *ngIf="showPayment">
           <form [formGroup]="paymentForm" class="input-form" (submit)="paymentAction($event)">
-            <mat-form-field appearance="fill" class="form-row">
+            <mat-form-field appearance="fill" class="form-row" subscriptSizing="dynamic">
               <mat-label>Kartennummer</mat-label>
               <input formControlName="cardNumber" matInput />
             </mat-form-field>
-            <mat-form-field appearance="fill" class="form-row">
+            <mat-form-field appearance="fill" class="form-row" subscriptSizing="dynamic" s>
               <mat-label>Verifizierungscode</mat-label>
               <input formControlName="verificationCode" matInput />
             </mat-form-field>
-            <mat-form-field appearance="fill" class="form-row">
+            <mat-form-field appearance="fill" class="form-row" subscriptSizing="dynamic">
               <mat-label>Ablaufdatum</mat-label>
               <input matInput [matDatepicker]="picker" formControlName="expiryDate" />
               <mat-hint>MM/DD/YYYY</mat-hint>

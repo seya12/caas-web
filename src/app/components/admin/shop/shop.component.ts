@@ -24,10 +24,12 @@ export class ShopComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
-  ) {}
-  ngOnInit(): void {
+  ) {
     this.initShopForm();
     this.initAddShopForm();
+  }
+  ngOnInit(): void {
+    this.initShop();
   }
 
   initShopForm() {
@@ -41,7 +43,6 @@ export class ShopComponent implements OnInit {
     this.addShopForm = this.formBuilder.group({
       name: ["", Validators.required],
     });
-    this.initShop();
   }
 
   initShop(): void {

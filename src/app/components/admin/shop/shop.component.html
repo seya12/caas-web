@@ -1,60 +1,63 @@
-<form [formGroup]="shopForm" novalidate (ngSubmit)="onSubmit()">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Shop-Daten</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="Name" formControlName="name" />
-            <mat-error *ngIf="shopForm.controls['name'].hasError('required')">
-              Name ist <strong>erforderlich</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>AppKey</mat-label>
-            <input matInput formControlName="appKey" readonly="true" />
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-    </mat-card-actions>
-  </mat-card>
-</form>
-
-<button mat-button (click)="addShop = !addShop">Neuen Shop Hinzufügen</button>
-<div *ngIf="addShop">
-  <form [formGroup]="addShopForm" novalidate (ngSubmit)="addNewShop()">
+<div class="shop-container">
+  <h1 class="mat-h1">Shop-Daten</h1>
+  <form [formGroup]="shopForm" novalidate (ngSubmit)="onSubmit()">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Neuer Shop</mat-card-title>
+      <mat-card-header class="margin-bottom">
+        <mat-card-title>Shop bearbeiten</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="row">
+        <div class="row margin-bottom">
           <div class="col">
-            <mat-form-field class="full-width">
+            <mat-form-field class="full-width" subscriptSizing="dynamic">
               <mat-label>Name</mat-label>
               <input matInput placeholder="Name" formControlName="name" />
-              <mat-error
-                *ngIf="addShopForm.controls['name'].hasError('required')"
-              >
+              <mat-error *ngIf="shopForm.controls['name'].hasError('required')">
                 Name ist <strong>erforderlich</strong>
               </mat-error>
             </mat-form-field>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width" subscriptSizing="dynamic">
+              <mat-label>AppKey</mat-label>
+              <input matInput formControlName="appKey" readonly="true" />
+            </mat-form-field>
+          </div>
+        </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit">Submit</button>
+      <mat-card-actions class="padding-left margin-top">
+        <button mat-raised-button color="primary" type="submit">Ändern</button>
       </mat-card-actions>
     </mat-card>
   </form>
+
+  <div class="new-shop-container">
+    <button mat-button color="primary" (click)="addShop = !addShop">Neuen Shop Hinzufügen</button>
+    <div *ngIf="addShop">
+      <form [formGroup]="addShopForm" novalidate (ngSubmit)="addNewShop()">
+        <mat-card>
+          <mat-card-header class="margin-bottom">
+            <mat-card-title>Neuer Shop</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width" subscriptSizing="dynamic">
+                  <mat-label>Name</mat-label>
+                  <input matInput placeholder="Name" formControlName="name" />
+                  <mat-error *ngIf="addShopForm.controls['name'].hasError('required')">
+                    Name ist <strong>erforderlich</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions class="padding-left margin-top">
+            <button mat-raised-button color="primary" type="submit">Hinzufügen</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </div>
 </div>

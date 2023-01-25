@@ -15,3 +15,22 @@
 .full-width {
   width: 100%;
 }
+
+.shop-container{
+  margin: 20px;
+}
+
+.margin-bottom{
+  margin-bottom: 16px;
+}
+
+.padding-left{
+  padding-left: 16px;
+}
+.margin-top{
+  margin-top: 10px;
+}
+
+.new-shop-container{
+  margin-top: 16px;
+}
