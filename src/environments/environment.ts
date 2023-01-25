@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   server: "http://localhost:8001",
-  shop: "/shops/1",
-  AppKey: "833d7783-3e13-4007-bd86-852ef08843f7",
+  // shop: "/shops/1",
+  // AppKey: "833d7783-3e13-4007-bd86-852ef08843f7",
 
-  // shop: "/shops/2",
-  // AppKey: "b6fed9c6-020d-41b6-8dbf-ae0b8e901bc7",
+  shop: "/shops/2",
+  AppKey: "b6fed9c6-020d-41b6-8dbf-ae0b8e901bc7",
 };
 
 /*
