@@ -19,6 +19,8 @@
 
 == Architektur und Struktur
 
+Link zum GitHub-Repo: https://github.com/seya12/caas-web
+
 === Generelles
 
 Der Webshop ist in drei Hauptseiten unterteilt:
@@ -81,6 +83,8 @@ Hier die Darstellung des Checkout-Prozesses:
 
 .Checkout Prozess
 image::checkout-process.png[Checkout Prozess]
+
+=== Admin
 
 Zur Admin-Seite gelangt man mit dem Login-Button in der Toolbar. Nach erfolgreicher Verifizierung gelangt man zur Admin Startseite. Für jeden Admin-Link ist ein Guard hinterlegt, um einen unberichtigten Zugriff zu vermeiden.
 Im Gegensatz zur User-Ansicht gibt es eine Menubar beim Admin. Die Startseite ist die Shop-Ansicht. Hier kann der Shopname bearbeitet werden, der AppKey ist nicht editierbar. Außerdem ist es möglich, einen neuen Shop anzulegen.

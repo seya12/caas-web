@@ -1,6 +1,7 @@
 # CaasWeb
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
+Angular Demo for a webshop. The design is related to Amazon. As a UI library Angular Material was used.
+For the backend an ASP.NET Web API was used. 
 
 ## Development server
 
