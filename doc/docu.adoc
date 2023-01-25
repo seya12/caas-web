@@ -1,0 +1,210 @@
+﻿:author: Lukas Seyr
+:listing-caption: Listing
+:source-highlighter: rouge
+// path to the directory containing the source code
+:src: ../src
+// path to the directory containing the images
+:imagesdir: ./imgs
+:toc:
+:numbered:
+:toclevels: 3
+:rouge-style: github
+:pdf-themesdir: ./theme
+:pdf-theme: basic
+:pdf-fontsdir: ./fonts
+// front-cover-image can be used to include the Exercise specification, for example:
+//:front-cover-image: ./Exercise1.pdf
+
+= MOC - Canteen Checker
+
+== Lösungsidee
+
+Als Basis für dieses Projekt habe ich die Übungsversion verwendet.
+Der Ablauf bei der Benützung der App soll folgendermaßen aussehen:
+
+* Login des Benutzers - in meiner Version sind die Anmeldedaten bereits vorausgefüllt
+* Bei erfolgreichem Login erscheint eine Übersicht der Kantine.
+In der Übersicht sind die Daten inklusive Reviewstatistiken sichtbar
+* Von der Übersicht aus können die einzelnen Reviews angezeigt werden.
+Außerdem kann hier der Logout und das Editieren der Daten über Menu-Items erfolgen.
+* Bei den Reviews werden alle Reviews mit Namen, Datum, Bewertung und Anmerkung angezeigt (Aufbau ähnlich wie Google Play Store).
+Mit einem Swipe nach Links können einzelne Reviews gelöscht werden.
+Dabei kommt es noch zu einem Dialog, welcher bestätigt werden muss
+* Das Editieren der Kantinendaten erfolgt in einer eigenen Aktivität.
+Ein neuer Marker kann in der Map über einen Long-Press hinzugefügt werden.
+
+== Architektur und Struktur
+
+Auch die Architektur und Struktur wurde von der Übung übernommen.
+Für das Editieren und für die Review-Übersicht wurden eigene Activities und Layout-Files erstellt.
+
+== Quelltext
+
+[source,groovy]
+.App build.gradle
+----
+include::..//app/build.gradle[]
+----
+
+.Project build.gradle
+[source,gradle]
+----
+include::..//build.gradle[]
+----
+
+.settings.gradle
+[source,gradle]
+----
+include::..//settings.gradle[]
+----
+
+.AndroidManifest.xml
+[source,xml]
+----
+include::../app/src/main/AndroidManifest.xml[]
+----
+
+.ConsumerApi.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/api/ConsumerApi.kt[]
+----
+
+.ConsumerApiImplementation.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/api/ConsumerApiImplementation.kt[]
+----
+
+.CanteenCheckerApplication.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/CanteenCheckerApplication.kt[]
+----
+
+.CanteenCheckerFirebaseMessagingService.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/CanteenCheckerFirebaseMessagingService.kt[]
+----
+
+.Model.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/core/Model.kt[]
+----
+
+.LocalBroadcasting.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/LocalBroadcasting.kt[]
+----
+
+.CanteenDetailsActivity.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/CanteenDetailsActivity.kt[]
+----
+
+.EditCanteenActivity.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/EditCanteenActivity.kt[]
+----
+
+.LoginActivity.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/LoginActivity.kt[]
+----
+
+.ReviewsFragment.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/ReviewsFragment.kt[]
+----
+
+.ReviewsOverviewActivity.kt
+[source,kotlin]
+----
+include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/ReviewsOverviewActivity.kt[]
+----
+
+.activity_canteen_details.xml
+[source,xml]
+----
+include::../app/src/main/res/layout//activity_canteen_details.xml[]
+----
+
+.activity_edit_canteen.xml
+[source,xml]
+----
+include::../app/src/main/res/layout//activity_edit_canteen.xml[]
+----
+
+.activity_login.xml
+[source,xml]
+----
+include::../app/src/main/res/layout//activity_login.xml[]
+----
+
+.activity_reviews_overview.xml
+[source,xml]
+----
+include::../app/src/main/res/layout//activity_reviews_overview.xml[]
+----
+
+.dialog_add_review.xml
+[source,xml]
+----
+include::../app/src/main/res/layout//dialog_add_review.xml[]
+----
+
+.fragment_reviews.xml
+[source,xml]
+----
+include::../app/src/main/res/layout//fragment_reviews.xml[]
+----
+
+.item_review.xml
+[source,xml]
+----
+include::../app/src/main/res/layout//item_review.xml[]
+----
+
+.menu_activity_canteen_details.xml
+[source,xml]
+----
+include::../app/src/main/res/menu//menu_activity_canteen_details.xml[]
+----
+
+.menu_activity_canteen_edit.xml
+[source,xml]
+----
+include::../app/src/main/res/menu//menu_activity_canteen_edit.xml[]
+----
+
+<<<<
+
+== Testfälle
+
+.Login
+image::login_start.png[Login Start]
+
+.Login Failed
+image::login_fail.png[Login Failed]
+
+.Canteen Details
+image::canteen_details.png[Canteen Details]
+
+.Canteen Details + Reviews
+image::canteen_details2.png[Canteen Details with Reviews]
+
+.Reviews
+image::reviews.png[Reviews]
+
+.Delete Review
+image::review_delete.png[Delete Review]
+
+.Edit
+image::edit.png[Edit Canteen]
