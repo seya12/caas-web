@@ -15,196 +15,94 @@
 // front-cover-image can be used to include the Exercise specification, for example:
 //:front-cover-image: ./Exercise1.pdf
 
-= MOC - Canteen Checker
-
-== Lösungsidee
-
-Als Basis für dieses Projekt habe ich die Übungsversion verwendet.
-Der Ablauf bei der Benützung der App soll folgendermaßen aussehen:
-
-* Login des Benutzers - in meiner Version sind die Anmeldedaten bereits vorausgefüllt
-* Bei erfolgreichem Login erscheint eine Übersicht der Kantine.
-In der Übersicht sind die Daten inklusive Reviewstatistiken sichtbar
-* Von der Übersicht aus können die einzelnen Reviews angezeigt werden.
-Außerdem kann hier der Logout und das Editieren der Daten über Menu-Items erfolgen.
-* Bei den Reviews werden alle Reviews mit Namen, Datum, Bewertung und Anmerkung angezeigt (Aufbau ähnlich wie Google Play Store).
-Mit einem Swipe nach Links können einzelne Reviews gelöscht werden.
-Dabei kommt es noch zu einem Dialog, welcher bestätigt werden muss
-* Das Editieren der Kantinendaten erfolgt in einer eigenen Aktivität.
-Ein neuer Marker kann in der Map über einen Long-Press hinzugefügt werden.
+= CaaS.Web
 
 == Architektur und Struktur
 
-Auch die Architektur und Struktur wurde von der Übung übernommen.
-Für das Editieren und für die Review-Übersicht wurden eigene Activities und Layout-Files erstellt.
+=== Generelles
 
-== Quelltext
+Der Webshop ist in drei Hauptseiten unterteilt:
 
-[source,groovy]
-.App build.gradle
-----
-include::..//app/build.gradle[]
-----
+* User-Bereich: Produkt-Liste, Produkt-Details und Warenkorb-Übersicht
+* Checkout
+* Admin-Bereich: Shop- und Produktpflege
 
-.Project build.gradle
-[source,gradle]
-----
-include::..//build.gradle[]
-----
+In der app.component.html ist lediglich ein <router-link> hinterlegt. Dahinter stecken die drei Hauptseiten mit Kind-Elementen und wiederum Routen. Eine Übersicht der Routen ist hier zu sehen:
 
-.settings.gradle
-[source,gradle]
-----
-include::..//settings.gradle[]
-----
+.Routen-Überblick
+image::routes_overview.png[Routen-Überblick]
 
-.AndroidManifest.xml
-[source,xml]
-----
-include::../app/src/main/AndroidManifest.xml[]
-----
+Das Design und der Aufbau ist an Amazon angelehnt. Bei jeder Aktion, wo ein Warenkorb benötigt wird, wird zuerst überprüft, ob eine Warenkob-Id im Local-Storage ist. Falls nicht oder falls die Id nicht mehr valide ist, wird ein POST-Request zum Backend gesendet. Somit wird sichergestellt, dass zu jeder Zeit ein valider Warenkorb beim User existiert.
 
-.ConsumerApi.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/api/ConsumerApi.kt[]
-----
+=== REST APIs
 
-.ConsumerApiImplementation.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/api/ConsumerApiImplementation.kt[]
-----
+Die Kommunikation mit den REST-APIs vom CaaS Backend passiert im Admin- und Shop-Service. Die hinterlegte URL, die zugewiesene Shop-Id und der AppKey sind nur in den Environment-Einstellungen zu ändern. Jeder Zugriff erfolgt über den Angular Http-Client, als Antwort wird also mit Observables aus rxjs gearbeitet.
 
-.CanteenCheckerApplication.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/CanteenCheckerApplication.kt[]
-----
+=== OAUTH
 
-.CanteenCheckerFirebaseMessagingService.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/CanteenCheckerFirebaseMessagingService.kt[]
-----
+Die Authentifizierung erfolgt über den Identity-Server von Manfred-Steyer. Entsprechende Änderungen können über die auth.config.ts-Datei vorgenommen werden.
 
-.Model.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/core/Model.kt[]
-----
+== Benutzeroberfläche
 
-.LocalBroadcasting.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/LocalBroadcasting.kt[]
-----
+=== Benutzer
 
-.CanteenDetailsActivity.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/CanteenDetailsActivity.kt[]
-----
+Die Startseite des Caas-Webshops zeigt immer die Produktübersicht an. Die einzelnen Produkte sind in einem Grid angeordnet, welches responsive ist:
 
-.EditCanteenActivity.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/EditCanteenActivity.kt[]
-----
+.Produktübersicht
+image::product-list-view.png[Produktübersicht]
 
-.LoginActivity.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/LoginActivity.kt[]
-----
+Mit einem Klick auf das Produkt öffnet sich eine Seite mit Produktdetails:
 
-.ReviewsFragment.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/ReviewsFragment.kt[]
-----
+.Produkt-Details
+image::product-detail-view.png[Produkt-Details]
 
-.ReviewsOverviewActivity.kt
-[source,kotlin]
-----
-include::../app/src/main/java/com/example/canteenchecker/adminapp/ui/ReviewsOverviewActivity.kt[]
-----
+Anschließend kann die Menge angepasst und zum Warenkorb hinzugefügt werden:
 
-.activity_canteen_details.xml
-[source,xml]
-----
-include::../app/src/main/res/layout//activity_canteen_details.xml[]
-----
+.Produkt-Details-Menge
+image::product-detail-view-add.png[Produkt-Details-Menge]
 
-.activity_edit_canteen.xml
-[source,xml]
-----
-include::../app/src/main/res/layout//activity_edit_canteen.xml[]
-----
+Jede Aktion liefert am unteren Ende des Bildschirms eine Rückmeldung zum Status.
+In der Toolbar kann nach einem Produktnamen oder einer Beschreibung gesucht werden. Anschließend werden alle gefundenen Elemente angezeigt:
 
-.activity_login.xml
-[source,xml]
-----
-include::../app/src/main/res/layout//activity_login.xml[]
-----
+.Produktsuche
+image::product-search.png[Produktsuche]
 
-.activity_reviews_overview.xml
-[source,xml]
-----
-include::../app/src/main/res/layout//activity_reviews_overview.xml[]
-----
+Über das Warenkorb-Symbol rechts oben kann der aktuelle Warenkorb angezeigt werden. Gibt es einen Rabatt, ist sowohl der original- als auch der reduzierte Preis zu sehen.
 
-.dialog_add_review.xml
-[source,xml]
-----
-include::../app/src/main/res/layout//dialog_add_review.xml[]
-----
+.Warenkorb
+image::cart-overview.png[Warenkorb]
 
-.fragment_reviews.xml
-[source,xml]
-----
-include::../app/src/main/res/layout//fragment_reviews.xml[]
-----
+Über den "Zur Kasse gehen" Button kommt man zum Checkout. Dort kann ein User erstellt werden, falls noch kein User beim Warenkorb zugewiesen ist. Ist bereits ein User zugewiesen, kann über eine Suche ein User gesucht und hinzugefügt werden. Die Usersuche funktioniert auch, wenn noch kein User hinzugefügt wurde.
 
-.item_review.xml
-[source,xml]
-----
-include::../app/src/main/res/layout//item_review.xml[]
-----
+Existieren für einen User Zahlungsmittel, werden diese sofort angezeigt. Diese können auch editiert, oder wenn noch nicht vorhanden hinzugefügt werden.
 
-.menu_activity_canteen_details.xml
-[source,xml]
-----
-include::../app/src/main/res/menu//menu_activity_canteen_details.xml[]
-----
+Außerdem ist es möglich, einen Coupon einzulösen. Darunter werden die Artikel des Warenkorbs angezeigt. Nach erfolgreicher Bestellung erscheint ein Bestätigungsdialog oder ein Fehlerdialog.
+Hier die Darstellung des Checkout-Prozesses:
 
-.menu_activity_canteen_edit.xml
-[source,xml]
-----
-include::../app/src/main/res/menu//menu_activity_canteen_edit.xml[]
-----
+.Checkout Prozess
+image::checkout-process.png[Checkout Prozess]
 
-<<<<
+Zur Admin-Seite gelangt man mit dem Login-Button in der Toolbar. Nach erfolgreicher Verifizierung gelangt man zur Admin Startseite. Für jeden Admin-Link ist ein Guard hinterlegt, um einen unberichtigten Zugriff zu vermeiden.
+Im Gegensatz zur User-Ansicht gibt es eine Menubar beim Admin. Die Startseite ist die Shop-Ansicht. Hier kann der Shopname bearbeitet werden, der AppKey ist nicht editierbar. Außerdem ist es möglich, einen neuen Shop anzulegen.
 
-== Testfälle
+.Shop-Übersicht
+image::shop-overview.png[Shop-Übersicht]
 
-.Login
-image::login_start.png[Login Start]
+In der Produktübersicht werden alle Produkte für den aktuellen Shop angezeigt. In der Tabelle kann gefiltert werden. Alle Aktionen sind in der letzten Spalte sichtbar: Neues Produkt anlegen, Produkt bearbeiten und Produkt löschen. Beim Löschen wird allerdings nur das Aktiv-Kennzeichen entfernt.
 
-.Login Failed
-image::login_fail.png[Login Failed]
+.Admin-Produkt-Übersicht
+image::admin-product.png[Admin-Produkt-Übersicht]
 
-.Canteen Details
-image::canteen_details.png[Canteen Details]
+Aktuell gibt es drei Statistiken: Ein Säulendiagramm für den Umsatz 2022, ein Tortendiagramm für die meistverkauften Produkte 2022 und ein Liniendiagramm mit den eingelösten Coupons für 2022.
 
-.Canteen Details + Reviews
-image::canteen_details2.png[Canteen Details with Reviews]
+.Statistik-Übersicht
+image::statistics-overview.png[Shop-Übersicht]
 
-.Reviews
-image::reviews.png[Reviews]
+.Meistverkauften Produkte 2022
+image::product-statistics.png[Meistverkauften Produkte 2022]
 
-.Delete Review
-image::review_delete.png[Delete Review]
+.Umsatz für 2022
+image::revenue-statistics.png[Umsatz für 2022]
 
-.Edit
-image::edit.png[Edit Canteen]
+.Eingelöste Coupons 2022
+image::coupons-statistics.png[Eingelöste Coupons 2022]
