@@ -30,7 +30,6 @@ export class EditProductDialogComponent implements OnInit {
   }
 
   performAction() {
-    console.log("perofrm");
     if (this.data.id) {
       this.adminService.updateProduct(this.productForm.value).subscribe();
     } else {

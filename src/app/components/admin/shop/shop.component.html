@@ -27,7 +27,9 @@
         </div>
       </mat-card-content>
       <mat-card-actions class="padding-left margin-top">
-        <button mat-raised-button color="primary" type="submit">Ändern</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!shopForm.valid">
+          Ändern
+        </button>
       </mat-card-actions>
     </mat-card>
   </form>
@@ -54,7 +56,9 @@
             </div>
           </mat-card-content>
           <mat-card-actions class="padding-left margin-top">
-            <button mat-raised-button color="primary" type="submit">Hinzufügen</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!addShopForm.valid">
+              Hinzufügen
+            </button>
           </mat-card-actions>
         </mat-card>
       </form>

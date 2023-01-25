@@ -5,6 +5,6 @@
   <p><strong>Name:</strong> {{ data.name }}</p>
   <p><strong>AppKey:</strong> {{ data.appKey }}</p>
 </div>
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>

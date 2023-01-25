@@ -5,6 +5,7 @@ import { Product } from "src/app/models/product";
 import { MatDialog } from "@angular/material/dialog";
 import { EditProductDialogComponent } from "../dialogs/edit-product-dialog/edit-product-dialog.component";
 import { MatTableDataSource } from "@angular/material/table";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-admin-product-list",
@@ -24,10 +25,11 @@ export class AdminProductListComponent implements OnInit {
     "actions",
   ];
 
-  /**
-   *
-   */
-  constructor(private adminService: AdminService, private dialog: MatDialog) {}
+  constructor(
+    private adminService: AdminService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -44,9 +46,8 @@ export class AdminProductListComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {});
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.adminService
-          .deleteProduct(productId)
-          .subscribe(() => this.loadProducts());
+        this.adminService.deleteProduct(productId).subscribe(() => this.loadProducts());
+        this.snackBar.open("Aktion erfolgreich!", "Schließen", { duration: 5000 });
       }
     });
   }
@@ -58,6 +59,7 @@ export class AdminProductListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadProducts();
+        this.snackBar.open("Aktion erfolgreich!", "Schließen", { duration: 5000 });
       }
     });
   }
@@ -69,12 +71,12 @@ export class AdminProductListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadProducts();
+        this.snackBar.open("Aktion erfolgreich!", "Schließen", { duration: 5000 });
       }
     });
   }
 
   applyFilter(event: KeyboardEvent) {
-    console.log(event);
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

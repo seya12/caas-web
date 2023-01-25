@@ -1,7 +1,6 @@
 <h1 mat-dialog-title>Wirklich löschen?</h1>
-<div mat-dialog-content>
-  Wenn Sie das Produkt löschen, wird es auf inaktiv gesetzt.
-</div>
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="true">Close</button>
+<div mat-dialog-content>Wenn Sie das Produkt löschen, wird es auf inaktiv gesetzt.</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">Bestätigen</button>
+  <button mat-button [mat-dialog-close]="false">Abbrechen</button>
 </div>
