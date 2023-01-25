@@ -8,7 +8,7 @@ import { authCodeFlowConfig } from "./auth.config";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  title = "caas-web";
+  title = "caas-web2";
 
   constructor(private oauthService: OAuthService) {
     this.configureWithNewConfigApi();
