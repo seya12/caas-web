@@ -89,10 +89,16 @@
             <mat-form-field appearance="fill" class="form-row" subscriptSizing="dynamic">
               <mat-label>Kartennummer</mat-label>
               <input formControlName="cardNumber" matInput />
+              <mat-error *ngIf="paymentForm.controls['cardNumber'].invalid"
+                >Ungültige Kartennummer!</mat-error
+              >
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-row" subscriptSizing="dynamic" s>
               <mat-label>Verifizierungscode</mat-label>
               <input formControlName="verificationCode" matInput />
+              <mat-error *ngIf="paymentForm.controls['verificationCode'].invalid"
+                >Ungültiger Verifizierungscode!</mat-error
+              >
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-row" subscriptSizing="dynamic">
               <mat-label>Ablaufdatum</mat-label>
@@ -100,6 +106,9 @@
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+              <mat-error *ngIf="paymentForm.controls['expiryDate'].invalid"
+                >Ungültiges Ablaufdatum!</mat-error
+              >
             </mat-form-field>
             <button
               mat-raised-button

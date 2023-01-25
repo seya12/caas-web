@@ -1,3 +1,4 @@
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { OrderDialogSuccessComponent } from "../../components/order-dialog-success/order-dialog-success.component";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -35,7 +36,8 @@ export class OrderComponent implements OnInit {
     private shopService: ShopService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -90,19 +92,21 @@ export class OrderComponent implements OnInit {
     this.shopService.getPayment(userId).subscribe({
       next: (payment) => {
         this.payment = payment;
-        console.log(payment);
         this.paymentForm.setValue({
           cardNumber: this.payment.cardNumber,
           verificationCode: this.payment.verificationCode,
           expiryDate: new Date(this.payment.expiryDate),
         });
       },
-      error: () => console.log("no payment exists"),
     });
   }
 
   searchForUser(email: string): void {
-    this.shopService.searchForUser(email).subscribe((user) => this.assignSearchUser(user));
+    this.shopService.searchForUser(email).subscribe({
+      next: (user) => this.assignSearchUser(user),
+      error: () =>
+        this.snackBar.open("Kein Benutzer wurde gefunden!", "Schließen", { duration: 5000 }),
+    });
   }
 
   assignSearchUser(user: User): void {
@@ -121,7 +125,6 @@ export class OrderComponent implements OnInit {
     this.shopService
       .createUser(this.cart.id, this.newUserForm.value)
       .subscribe(() => this.assignCart());
-    // this.shopService.getCart().subscribe((cart) => this.assignMembers(cart));
   }
 
   paymentAction(event: SubmitEvent) {
@@ -145,8 +148,12 @@ export class OrderComponent implements OnInit {
   }
 
   redeemCoupon(input: string): void {
-    this.shopService.redeemCoupon(this.cart.id, input).subscribe((coupon) => {
-      this.coupon = coupon;
+    this.shopService.redeemCoupon(this.cart.id, input).subscribe({
+      next: (coupon) => (this.coupon = coupon),
+      error: () =>
+        this.snackBar.open("Coupon konnte nicht hinzugefügt werden!", "Schließen", {
+          duration: 5000,
+        }),
     });
   }
 

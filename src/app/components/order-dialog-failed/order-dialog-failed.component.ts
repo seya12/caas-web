@@ -14,7 +14,6 @@ export class OrderDialogFailedComponent {
   ) {}
 
   onNoClick(): void {
-    console.log(this.data);
     this.dialogRef.close();
   }
 }
