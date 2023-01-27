@@ -13,6 +13,7 @@ import { User } from "../models/user";
 })
 export class ShopService {
   serverURL = `${environment.server}${environment.shop}`;
+  storageKey = `cartId${environment.shop}`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -31,7 +32,7 @@ export class ShopService {
   }
 
   public getCartIdFromLocalStorage(): string | null {
-    return localStorage.getItem("cartId");
+    return localStorage.getItem(this.storageKey);
   }
 
   public getCart(): Observable<Cart> {
@@ -48,7 +49,7 @@ export class ShopService {
   public createCart(): Observable<Cart> {
     return this.httpClient.post<Cart>(`${this.serverURL}/carts`, null).pipe(
       tap((cart) => {
-        localStorage.setItem("cartId", JSON.stringify(cart.id));
+        localStorage.setItem(this.storageKey, JSON.stringify(cart.id));
       })
     );
   }
@@ -126,6 +127,6 @@ export class ShopService {
   public makeOrder(cartId: number): Observable<CheckoutResponse> {
     return this.httpClient
       .post<CheckoutResponse>(`${this.serverURL}/carts/${cartId}/order`, {})
-      .pipe(tap(() => localStorage.removeItem("cartId")));
+      .pipe(tap(() => localStorage.removeItem(this.storageKey)));
   }
 }
